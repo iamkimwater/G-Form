@@ -2,7 +2,7 @@ import { ScrollView } from 'react-native'
 import TitleComponent from '../title/title-component'
 import QuestionsComponent from '../questions/questions-component'
 
-const Home = () => {
+const HomeTab = () => {
   return (
     <ScrollView>
       <TitleComponent />
@@ -11,4 +11,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomeTab
