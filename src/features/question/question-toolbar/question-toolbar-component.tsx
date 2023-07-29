@@ -19,7 +19,7 @@ const QuestionToolbarComponent: React.FC<QuestionToolbarComponentProps> = ({
       }}
     >
       <RequiredToggleComponent questionId={questionId} />
-      <CopyButtonComponent />
+      <CopyButtonComponent questionId={questionId} />
       <DeleteButtonComponent />
       <AddButtonComponent />
     </View>

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { formInitialState } from '../../store/initial-state'
 import {
+  CopyQuestionAction,
   setEditingQuestionIdAction,
   setPendingQuestionTitleAction,
   SetQuestionRequiredAction,
@@ -42,6 +43,21 @@ export const questionSlice = createSlice({
         state.formQuestions.questions[questionId].questionRequired = required
       }
     },
+
+    // 질문 복사
+    copyQuestion: (state, action: CopyQuestionAction) => {
+      const { questionId } = action.payload
+      const originalQuestion = state.formQuestions.questions[questionId]
+
+      if (originalQuestion) {
+        const maxId = Math.max(
+          ...Object.keys(state.formQuestions.questions).map(Number),
+        )
+        const newQuestion = { ...originalQuestion, questionId: maxId + 1 }
+        state.formQuestions.questions[newQuestion.questionId] = newQuestion
+        state.formQuestions.questionIds.push(newQuestion.questionId)
+      }
+    },
   },
 })
 
@@ -51,5 +67,6 @@ export const {
   setQuestionTitle,
   setQuestionType,
   setQuestionRequired,
+  copyQuestion,
 } = questionSlice.actions
 export default questionSlice.reducer

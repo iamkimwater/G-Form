@@ -26,3 +26,7 @@ export type SetQuestionRequiredAction = PayloadAction<{
   questionId: number
   required: boolean
 }>
+
+export type CopyQuestionAction = PayloadAction<{
+  questionId: number
+}>
