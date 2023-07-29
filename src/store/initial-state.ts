@@ -16,6 +16,7 @@ export const formInitialState: IForm = {
       0: {
         questionId: 0,
         questionTitle: '제목 없는 질문',
+        pendingQuestionTitle: '제목 없는 질문',
         questionType: QUESTION_TYPE.multipleChoice,
         questionRequired: false,
         choices: ['옵션1'],
