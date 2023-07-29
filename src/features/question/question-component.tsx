@@ -1,24 +1,118 @@
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { TouchableOpacity, View, Text } from 'react-native'
+import { RootState } from '../../types/navigation-type'
+import { QuestionComponentProps } from '../../types/props'
+import { setEditingQuestionId } from './question-slice'
 import QuestionTitleComponent from './question-title/question-title-component'
-import { View } from 'react-native'
 import ActionSheetComponent from './action-sheet/action-sheet-component'
 import QuestionAnswerComponent from './question-answer/question-answer-component'
 import QuestionToolbarComponent from './question-toolbar/question-toolbar-component'
 
-const QuestionComponent = () => {
-  // 질문구성:
+const QuestionComponent: React.FC<QuestionComponentProps> = ({
+  questionId,
+}) => {
+  const question = useSelector(
+    (state: RootState) => state.question.formQuestions.questions[questionId],
+  )
+  const editingQuestionId = useSelector(
+    (state: RootState) => state.question.formQuestions.editingQuestionId,
+  )
 
-  // 제목영역
-  // 질문타입선택영역 (액션시트)
-  // 질문타입에따른답변영역
-  // 질문툴바영역
+  const dispatch = useDispatch()
 
-  return (
-    <View>
-      <QuestionTitleComponent />
-      <ActionSheetComponent />
-      <QuestionAnswerComponent />
-      <QuestionToolbarComponent />
-    </View>
+  const isEditing = editingQuestionId === questionId
+
+  const changeEditingState = () => {
+    dispatch(setEditingQuestionId(questionId))
+  }
+
+  const finishEditing = () => {
+    dispatch(setEditingQuestionId(null))
+  }
+
+  return isEditing ? (
+    <TouchableOpacity
+      onPress={changeEditingState}
+      style={{
+        margin: 10,
+        borderStyle: 'solid',
+        borderWidth: 0.7,
+        borderRadius: 5,
+        justifyContent: 'space-between',
+      }}
+      activeOpacity={1}
+    >
+      <View
+        style={{
+          margin: 10,
+          borderStyle: 'solid',
+          borderWidth: 0.7,
+          borderRadius: 5,
+          justifyContent: 'space-between',
+        }}
+      >
+        <QuestionTitleComponent
+          questionId={questionId}
+          finishEditing={finishEditing}
+        />
+      </View>
+      <View>
+        <View
+          style={{
+            margin: 10,
+            borderStyle: 'solid',
+            borderWidth: 0.7,
+            borderRadius: 5,
+            justifyContent: 'space-between',
+          }}
+        >
+          <ActionSheetComponent />
+        </View>
+        <View
+          style={{
+            margin: 10,
+            borderStyle: 'solid',
+            borderWidth: 0.7,
+            borderRadius: 5,
+            justifyContent: 'space-between',
+          }}
+        >
+          <QuestionAnswerComponent />
+        </View>
+      </View>
+      <View
+        style={{
+          margin: 10,
+          borderStyle: 'solid',
+          borderWidth: 0.7,
+          borderRadius: 5,
+          justifyContent: 'space-between',
+        }}
+      >
+        <QuestionToolbarComponent />
+      </View>
+    </TouchableOpacity>
+  ) : (
+    <TouchableOpacity
+      onPress={changeEditingState}
+      style={{
+        margin: 10,
+        borderStyle: 'solid',
+        borderWidth: 0.7,
+        borderRadius: 5,
+        justifyContent: 'space-between',
+      }}
+      activeOpacity={1}
+    >
+      <View>
+        <Text>{question.questionTitle}</Text>
+      </View>
+      <View>
+        <QuestionAnswerComponent />
+      </View>
+    </TouchableOpacity>
   )
 }
+
 export default QuestionComponent

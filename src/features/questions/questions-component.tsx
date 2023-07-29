@@ -11,7 +11,7 @@ const QuestionsComponent = () => {
   console.log(`questionIds: ${questionIds}`)
 
   const renderQuestionComponent = (questionId: number) => (
-    <QuestionComponent key={questionId} />
+    <QuestionComponent key={questionId} questionId={questionId} />
   )
 
   return (

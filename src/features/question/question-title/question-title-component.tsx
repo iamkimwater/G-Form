@@ -1,6 +1,10 @@
+import React from 'react'
 import { View } from 'react-native'
+import { QuestionTitleComponentProps } from '../../../types/props'
 
-const QuestionTitleComponent = () => {
+const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
+  questionId,
+}) => {
   return (
     <View
       style={{
