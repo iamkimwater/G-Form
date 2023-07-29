@@ -28,10 +28,6 @@ export interface RequiredToggleComponentProps {
   questionId: number
 }
 
-export interface AddButtonComponentProps {
-  questionId: number
-}
-
 export interface CopyButtonComponentProps {
   questionId: number
 }
@@ -40,10 +36,7 @@ export interface DeleteButtonComponentProps {
   questionId: number
 }
 
-export interface ShortAnswerComponentProps {
-  questionId: number
-  question: IQuestion
-}
+export interface ShortAnswerComponentProps {}
 
 export interface LongAnswerComponentProps {
   questionId: number
