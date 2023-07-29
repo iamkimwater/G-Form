@@ -3,6 +3,7 @@ import { formInitialState } from '../../store/initial-state'
 import {
   setEditingQuestionIdAction,
   setPendingQuestionTitleAction,
+  SetQuestionRequiredAction,
   setQuestionTitleAction,
   SetQuestionTypeAction,
 } from '../../types/actions'
@@ -33,6 +34,14 @@ export const questionSlice = createSlice({
       const { questionId, newType } = action.payload
       state.formQuestions.questions[questionId].questionType = newType
     },
+
+    // 질문 필수 여부 변경
+    setQuestionRequired: (state, action: SetQuestionRequiredAction) => {
+      const { questionId, required } = action.payload
+      if (state.formQuestions.questions[questionId]) {
+        state.formQuestions.questions[questionId].questionRequired = required
+      }
+    },
   },
 })
 
@@ -41,5 +50,6 @@ export const {
   setPendingQuestionTitle,
   setQuestionTitle,
   setQuestionType,
+  setQuestionRequired,
 } = questionSlice.actions
 export default questionSlice.reducer

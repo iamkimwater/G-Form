@@ -84,7 +84,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
           alignItems: 'flex-end',
         }}
       >
-        <QuestionToolbarComponent />
+        <QuestionToolbarComponent questionId={questionId} question={question} />
       </View>
     </TouchableOpacity>
   ) : (

@@ -21,6 +21,7 @@ export interface QuestionAnswerComponentProps {
 
 export interface QuestionToolbarComponentProps {
   questionId: number
+  question: IQuestion
 }
 
 export interface RequiredToggleComponentProps {

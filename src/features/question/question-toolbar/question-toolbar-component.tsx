@@ -6,7 +6,9 @@ import DeleteButtonComponent from './buttons/delete-button-component'
 import AddButtonComponent from './buttons/add-button-component'
 import { QuestionToolbarComponentProps } from '../../../types/props'
 
-const QuestionToolbarComponent = () => {
+const QuestionToolbarComponent: React.FC<QuestionToolbarComponentProps> = ({
+  questionId,
+}) => {
   return (
     <View
       style={{
@@ -16,7 +18,7 @@ const QuestionToolbarComponent = () => {
         margin: 5,
       }}
     >
-      <RequiredToggleComponent />
+      <RequiredToggleComponent questionId={questionId} />
       <CopyButtonComponent />
       <DeleteButtonComponent />
       <AddButtonComponent />
