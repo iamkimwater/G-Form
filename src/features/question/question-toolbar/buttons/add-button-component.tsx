@@ -1,10 +1,12 @@
-import { Text, View } from 'react-native'
+import { IconButton } from '@react-native-material/core'
+import { MaterialIcons } from '@expo/vector-icons'
 
-const AddButtonComponent = () => {
+const QuestionAddButtonComponent = () => {
   return (
-    <View>
-      <Text>질문추가</Text>
-    </View>
+    <IconButton
+      icon={<MaterialIcons name="add-circle-outline" size={25} color="black" />}
+    />
   )
 }
-export default AddButtonComponent
+
+export default QuestionAddButtonComponent

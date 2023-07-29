@@ -43,7 +43,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
       }}
       activeOpacity={1}
     >
-      <View style={{ marginTop: 20, marginStart: 20, marginEnd: 20 }}>
+      <View style={{ marginTop: 10, marginStart: 20, marginEnd: 20 }}>
         <QuestionTitleComponent
           questionId={questionId}
           finishEditing={finishEditing}
@@ -77,10 +77,11 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
       <View
         style={{
           marginTop: 10,
-          marginBottom: 20,
+          marginBottom: 10,
           marginStart: 20,
           marginEnd: 20,
           justifyContent: 'space-between',
+          alignItems: 'flex-end',
         }}
       >
         <QuestionToolbarComponent />

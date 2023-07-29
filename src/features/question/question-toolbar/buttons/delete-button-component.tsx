@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native'
+import { IconButton } from '@react-native-material/core'
+import { MaterialIcons } from '@expo/vector-icons'
 
-const DeleteButtonComponent = () => {
+const QuestionDeleteButtonComponent = () => {
   return (
-    <View>
-      <Text>질문복사</Text>
-    </View>
+    <IconButton
+      icon={<MaterialIcons name="delete" size={25} color="black" />}
+    />
   )
 }
-export default DeleteButtonComponent
+
+export default QuestionDeleteButtonComponent

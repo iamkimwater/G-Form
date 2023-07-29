@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
+import { IconButton } from '@react-native-material/core'
+import { MaterialIcons } from '@expo/vector-icons'
 
-const CopyButtonComponent = () => {
+const QuestionCopyButtonComponent = () => {
   return (
-    <View>
-      <Text>질문복사</Text>
-    </View>
+    <IconButton
+      icon={<MaterialIcons name="content-copy" size={25} color="black" />}
+    />
   )
 }
 
-export default CopyButtonComponent
+export default QuestionCopyButtonComponent

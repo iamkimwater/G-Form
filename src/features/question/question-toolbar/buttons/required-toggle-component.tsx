@@ -1,10 +1,13 @@
-import { View, Text } from 'react-native'
+import { Text, View } from 'react-native'
+import { Switch } from '@react-native-material/core'
 
-const RequiredToggleComponent = () => {
+const QuestionRequiredToggleComponent = () => {
   return (
-    <View>
-      <Text>질문필수여부</Text>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text>필수</Text>
+      <Switch />
     </View>
   )
 }
-export default RequiredToggleComponent
+
+export default QuestionRequiredToggleComponent
