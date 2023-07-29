@@ -68,6 +68,16 @@ export const questionSlice = createSlice({
         (id) => id !== questionId,
       )
     },
+
+    // 질문 생성
+    addQuestion: (state) => {
+      const newQuestionId = Math.max(...state.formQuestions.questionIds) + 1
+      state.formQuestions.questions[newQuestionId] = {
+        ...formInitialState.formQuestions.questions[0],
+        questionId: newQuestionId,
+      }
+      state.formQuestions.questionIds.push(newQuestionId)
+    },
   },
 })
 
@@ -79,5 +89,6 @@ export const {
   setQuestionRequired,
   copyQuestion,
   deleteQuestion,
+  addQuestion,
 } = questionSlice.actions
 export default questionSlice.reducer
