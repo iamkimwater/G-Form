@@ -11,6 +11,7 @@ export interface QuestionTitleComponentProps {
 
 export interface ActionSheetComponentProps {
   questionId: number
+  question: IQuestion
 }
 
 export interface QuestionAnswerComponentProps {

@@ -59,7 +59,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
             justifyContent: 'space-between',
           }}
         >
-          <ActionSheetComponent />
+          <ActionSheetComponent questionId={questionId} question={question} />
         </View>
         <View
           style={{

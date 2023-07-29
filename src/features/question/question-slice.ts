@@ -4,6 +4,7 @@ import {
   setEditingQuestionIdAction,
   setPendingQuestionTitleAction,
   setQuestionTitleAction,
+  SetQuestionTypeAction,
 } from '../../types/actions'
 
 export const questionSlice = createSlice({
@@ -14,6 +15,7 @@ export const questionSlice = createSlice({
     setEditingQuestionId: (state, action: setEditingQuestionIdAction) => {
       state.formQuestions.editingQuestionId = action.payload
     },
+
     // 질문 제목 변경
     setPendingQuestionTitle: (state, action: setPendingQuestionTitleAction) => {
       const { questionId, pendingQuestionTitle } = action.payload
@@ -25,6 +27,12 @@ export const questionSlice = createSlice({
       state.formQuestions.questions[questionId].questionTitle =
         state.formQuestions.questions[questionId].pendingQuestionTitle
     },
+
+    // 질문 타입 변경
+    setQuestionType: (state, action: SetQuestionTypeAction) => {
+      const { questionId, newType } = action.payload
+      state.formQuestions.questions[questionId].questionType = newType
+    },
   },
 })
 
@@ -32,5 +40,6 @@ export const {
   setEditingQuestionId,
   setPendingQuestionTitle,
   setQuestionTitle,
+  setQuestionType,
 } = questionSlice.actions
 export default questionSlice.reducer

@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
+import { QUESTION_TYPE } from './enums'
 
 // title
 export type SetPendingTitleAction = PayloadAction<string>
@@ -14,4 +15,9 @@ export type setPendingQuestionTitleAction = PayloadAction<{
 
 export type setQuestionTitleAction = PayloadAction<{
   questionId: number
+}>
+
+export type SetQuestionTypeAction = PayloadAction<{
+  questionId: number
+  newType: QUESTION_TYPE
 }>
