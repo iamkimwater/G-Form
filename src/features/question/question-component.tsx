@@ -52,10 +52,9 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
       <View>
         <View
           style={{
-            margin: 10,
-            borderStyle: 'solid',
-            borderWidth: 0.7,
-            borderRadius: 5,
+            marginTop: 10,
+            marginStart: 20,
+            marginEnd: 20,
             justifyContent: 'space-between',
           }}
         >
@@ -63,22 +62,24 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
         </View>
         <View
           style={{
-            margin: 10,
-            borderStyle: 'solid',
-            borderWidth: 0.7,
-            borderRadius: 5,
+            marginTop: 10,
+            marginStart: 20,
+            marginEnd: 20,
             justifyContent: 'space-between',
           }}
         >
-          <QuestionAnswerComponent />
+          <QuestionAnswerComponent
+            questionId={questionId}
+            question={question}
+          />
         </View>
       </View>
       <View
         style={{
-          margin: 10,
-          borderStyle: 'solid',
-          borderWidth: 0.7,
-          borderRadius: 5,
+          marginTop: 10,
+          marginBottom: 20,
+          marginStart: 20,
+          marginEnd: 20,
           justifyContent: 'space-between',
         }}
       >
@@ -97,11 +98,19 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
       }}
       activeOpacity={1}
     >
-      <View>
+      <View style={{ marginTop: 20, marginStart: 20, marginEnd: 20 }}>
         <Text>{question.questionTitle}</Text>
       </View>
-      <View>
-        <QuestionAnswerComponent />
+      <View
+        style={{
+          marginTop: 10,
+          marginBottom: 20,
+          marginStart: 20,
+          marginEnd: 20,
+          justifyContent: 'space-between',
+        }}
+      >
+        <QuestionAnswerComponent questionId={questionId} question={question} />
       </View>
     </TouchableOpacity>
   )

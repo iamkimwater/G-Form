@@ -16,6 +16,7 @@ export interface ActionSheetComponentProps {
 
 export interface QuestionAnswerComponentProps {
   questionId: number
+  question: IQuestion
 }
 
 export interface QuestionToolbarComponentProps {
