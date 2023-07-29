@@ -6,7 +6,7 @@ export type RootState = ReturnType<typeof store.getState>
 
 export type RootTabParamList = {
   Home: undefined
-  Preview: { formId: number }
+  Preview: undefined
 }
 
 export type PreviewProps = MaterialBottomTabNavigationProp<

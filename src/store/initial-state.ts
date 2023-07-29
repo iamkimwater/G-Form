@@ -23,4 +23,5 @@ export const formInitialState: IForm = {
       },
     },
   },
+  previewMode: false,
 }

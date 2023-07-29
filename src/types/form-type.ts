@@ -53,4 +53,5 @@ export interface IForm {
   formId: number
   formTitle: ITitle
   formQuestions: IQuestions
+  previewMode: boolean
 }
