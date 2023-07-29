@@ -6,6 +6,8 @@ export const formInitialState: IForm = {
   formTitle: {
     title: '제목 없는 설문지',
     description: '',
+    pendingTitle: '제목 없는 설문지',
+    pendingDescription: '',
   },
   formQuestions: {
     editingQuestionId: 0,

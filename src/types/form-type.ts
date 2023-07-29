@@ -44,6 +44,8 @@ export interface IQuestions {
 export interface ITitle {
   title: string
   description: string
+  pendingTitle: string
+  pendingDescription: string
 }
 
 export interface IForm {

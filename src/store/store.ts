@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
+import titleReducer from '../features/title/title-slice'
 
 const store = configureStore({
   reducer: {
-    // 리듀서 추가
+    title: titleReducer,
   },
 })
 export default store
