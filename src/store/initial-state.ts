@@ -2,7 +2,7 @@ import { IForm } from '../types/form-type'
 import { QUESTION_TYPE } from '../types/enums'
 
 export const formInitialState: IForm = {
-  formId: 0,
+  formId: 1,
   formTitle: {
     title: '제목 없는 설문지',
     description: '',
@@ -10,11 +10,11 @@ export const formInitialState: IForm = {
     pendingDescription: '',
   },
   formQuestions: {
-    editingQuestionId: 0,
-    questionIds: [0],
+    editingQuestionId: 1,
+    questionIds: [1],
     questions: {
-      0: {
-        questionId: 0,
+      1: {
+        questionId: 1,
         questionTitle: '제목 없는 질문',
         pendingQuestionTitle: '제목 없는 질문',
         questionType: QUESTION_TYPE.multipleChoice,

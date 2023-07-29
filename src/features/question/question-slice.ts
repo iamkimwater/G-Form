@@ -73,7 +73,7 @@ export const questionSlice = createSlice({
     addQuestion: (state) => {
       const newQuestionId = Math.max(...state.formQuestions.questionIds) + 1
       state.formQuestions.questions[newQuestionId] = {
-        ...formInitialState.formQuestions.questions[0],
+        ...formInitialState.formQuestions.questions[1],
         questionId: newQuestionId,
       }
       state.formQuestions.questionIds.push(newQuestionId)
