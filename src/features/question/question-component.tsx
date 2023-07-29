@@ -43,15 +43,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
       }}
       activeOpacity={1}
     >
-      <View
-        style={{
-          margin: 10,
-          borderStyle: 'solid',
-          borderWidth: 0.7,
-          borderRadius: 5,
-          justifyContent: 'space-between',
-        }}
-      >
+      <View style={{ marginTop: 20, marginStart: 20, marginEnd: 20 }}>
         <QuestionTitleComponent
           questionId={questionId}
           finishEditing={finishEditing}
