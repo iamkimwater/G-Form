@@ -30,3 +30,7 @@ export type SetQuestionRequiredAction = PayloadAction<{
 export type CopyQuestionAction = PayloadAction<{
   questionId: number
 }>
+
+export type DeleteQuestionAction = PayloadAction<{
+  questionId: number
+}>

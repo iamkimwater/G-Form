@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { formInitialState } from '../../store/initial-state'
 import {
   CopyQuestionAction,
+  DeleteQuestionAction,
   setEditingQuestionIdAction,
   setPendingQuestionTitleAction,
   SetQuestionRequiredAction,
@@ -58,6 +59,15 @@ export const questionSlice = createSlice({
         state.formQuestions.questionIds.push(newQuestion.questionId)
       }
     },
+
+    // 질문 삭제
+    deleteQuestion: (state, action: DeleteQuestionAction) => {
+      const { questionId } = action.payload
+      delete state.formQuestions.questions[questionId]
+      state.formQuestions.questionIds = state.formQuestions.questionIds.filter(
+        (id) => id !== questionId,
+      )
+    },
   },
 })
 
@@ -68,5 +78,6 @@ export const {
   setQuestionType,
   setQuestionRequired,
   copyQuestion,
+  deleteQuestion,
 } = questionSlice.actions
 export default questionSlice.reducer
