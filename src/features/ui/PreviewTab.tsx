@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
@@ -10,9 +10,7 @@ import MultipleChoiceComponent from '../question/question-answer/types/multiple-
 import CheckboxComponent from '../question/question-answer/types/checkbox-component'
 
 const PreviewTab = () => {
-  const previewMode = useSelector(
-    (state: RootState) => state.preview.previewMode,
-  )
+  const { previewMode } = useSelector((state: RootState) => state.preview)
 
   const dispatch = useDispatch()
 
@@ -38,37 +36,37 @@ const PreviewTab = () => {
           borderWidth: 0.5,
         }}
       >
-        <ShortAnswerComponent />
+        <ShortAnswerComponent previewMode={previewMode} />
       </View>
       <View
         style={{
-          margin: 20,
+          margin: 10,
           padding: 20,
           borderStyle: 'solid',
           borderWidth: 0.5,
         }}
       >
-        <LongAnswerComponent />
+        <LongAnswerComponent previewMode={previewMode} />
       </View>
       <View
         style={{
-          margin: 20,
+          margin: 10,
           padding: 20,
           borderStyle: 'solid',
           borderWidth: 0.5,
         }}
       >
-        <MultipleChoiceComponent />
+        <MultipleChoiceComponent previewMode={previewMode} />
       </View>
       <View
         style={{
-          margin: 20,
+          margin: 10,
           padding: 20,
           borderStyle: 'solid',
           borderWidth: 0.5,
         }}
       >
-        <CheckboxComponent />
+        <CheckboxComponent previewMode={previewMode} />
       </View>
     </View>
   )

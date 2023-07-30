@@ -17,6 +17,7 @@ export interface ActionSheetComponentProps {
 }
 
 export interface QuestionAnswerComponentProps {
+  questionId: number
   questionType: QUESTION_TYPE
 }
 
@@ -42,19 +43,20 @@ export interface DeleteButtonComponentProps {
   questionId: number
 }
 
-export interface ShortAnswerComponentProps {}
+export interface ShortAnswerComponentProps {
+  previewMode: boolean
+}
 
 export interface LongAnswerComponentProps {
-  questionId: number
-  question: IQuestion
+  previewMode: boolean
 }
 
 export interface MultipleChoiceComponentProps {
   questionId: number
-  question: IQuestion
+  previewMode: boolean
 }
 
 export interface CheckboxComponentProps {
   questionId: number
-  question: IQuestion
+  previewMode: boolean
 }

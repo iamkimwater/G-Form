@@ -36,10 +36,6 @@ export type IQuestion =
   | IMultipleChoiceQuestion
   | ICheckboxQuestion
 
-export interface IFormPreviewState {
-  previewMode: boolean
-}
-
 export interface IFormQuestionState {
   editingQuestionId: number | null
   questions: IQuestion[]
@@ -48,6 +44,10 @@ export interface IFormQuestionState {
 export interface IFormTitleState {
   title: string
   description: string
+}
+
+export interface IFormPreviewState {
+  previewMode: boolean
 }
 
 export interface IFormState {

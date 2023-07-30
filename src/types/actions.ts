@@ -40,3 +40,13 @@ export type CopyQuestionAction = PayloadAction<{
 export type DeleteQuestionAction = PayloadAction<{
   questionId: number
 }>
+
+export type AddChoiceAction = PayloadAction<{
+  questionId: number
+  newChoice: string
+}>
+
+export type DeleteChoiceAction = PayloadAction<{
+  questionId: number
+  deletedChoice: string
+}>

@@ -36,7 +36,10 @@ const QuestionIntroComponent = (props: {
           justifyContent: 'space-between',
         }}
       >
-        <QuestionAnswerComponent questionType={question.questionType} />
+        <QuestionAnswerComponent
+          questionId={question.questionId}
+          questionType={question.questionType}
+        />
       </View>
     </TouchableOpacity>
   )

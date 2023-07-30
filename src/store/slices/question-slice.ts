@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IFormQuestionState, IQuestion } from '../../types/form-type'
 import { QUESTION_TYPE } from '../../types/enums'
 import {
+  AddChoiceAction,
   CopyQuestionAction,
+  DeleteChoiceAction,
   DeleteQuestionAction,
   setEditingQuestionIdAction,
   setPendingQuestionTitleAction,
@@ -106,6 +108,32 @@ export const questionSlice = createSlice({
         questionId: maxId + 1,
       })
     },
+
+    // 질문 순서 변경
+    changeOrder: (state, action) => {
+      const { new_questions } = action.payload
+      state.questions = new_questions
+    },
+
+    // 선택지 생성 (객관식, 체크박스인 경우)
+    addChoice: (state, action: AddChoiceAction) => {
+      const { questionId, newChoice } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if ('choices' in question) {
+        question.choices.push(newChoice)
+      }
+    },
+
+    // 선택지 삭제 (객관식, 체크박스인 경우)
+    deleteChoice: (state, action: DeleteChoiceAction) => {
+      const { questionId, deletedChoice } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if ('choices' in question) {
+        question.choices = question.choices.filter(
+          (choice) => choice !== deletedChoice,
+        )
+      }
+    },
   },
 })
 
@@ -118,5 +146,6 @@ export const {
   copyQuestion,
   deleteQuestion,
   addQuestion,
+  addChoice,
 } = questionSlice.actions
 export default questionSlice.reducer

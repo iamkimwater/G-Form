@@ -7,6 +7,7 @@ import MultipleChoiceComponent from './types/multiple-choice-component'
 import CheckboxComponent from './types/checkbox-component'
 
 const QuestionAnswerComponent: React.FC<QuestionAnswerComponentProps> = ({
+  questionId,
   questionType,
 }) => {
   if (questionType === QUESTION_TYPE.shortAnswer) {
@@ -18,11 +19,11 @@ const QuestionAnswerComponent: React.FC<QuestionAnswerComponentProps> = ({
   }
 
   if (questionType === QUESTION_TYPE.multipleChoice) {
-    return <MultipleChoiceComponent />
+    return <MultipleChoiceComponent questionId={questionId} />
   }
 
   if (questionType === QUESTION_TYPE.checkbox) {
-    return <CheckboxComponent />
+    return <CheckboxComponent questionId={questionId} />
   }
   return null
 }

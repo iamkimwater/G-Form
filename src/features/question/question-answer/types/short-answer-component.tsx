@@ -1,19 +1,15 @@
 import { TextInput, View } from 'react-native'
 import React from 'react'
 import { ShortAnswerComponentProps } from '../../../../types/props'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../../types/navigation-type'
 
-const ShortAnswerComponent: React.FC<ShortAnswerComponentProps> = () => {
-  const previewMode = useSelector(
-    (state: RootState) => state.preview.previewMode,
-  )
-
+const ShortAnswerComponent: React.FC<ShortAnswerComponentProps> = ({
+  previewMode,
+}) => {
   return (
     <View>
       <TextInput
         value={''}
-        multiline={true}
+        multiline={false}
         placeholder={previewMode ? '내 답변' : '단답형 텍스트'}
         editable={previewMode}
         style={{
