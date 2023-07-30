@@ -1,5 +1,6 @@
 import { JSX } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 const Draggable = (props: {
   options: {
@@ -11,24 +12,23 @@ const Draggable = (props: {
     options: { drag, isActive },
   } = props
   return (Component: JSX.Element) => (
-    <View>
-      <TouchableOpacity
-        onLongPress={drag}
-        disabled={isActive}
-        style={{ backgroundColor: isActive ? '#b9b9b9' : 'white' }}
-      >
-        <View
+    <View style={{ flex: 1 }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <TouchableOpacity
+          onLongPress={drag}
+          disabled={isActive}
           style={{
-            backgroundColor: 'grey',
-            height: 20,
-            marginLeft: 10,
-            marginRight: 10,
+            backgroundColor: isActive ? '#c9c8c8' : '#e3e2e2',
+            width: 70,
+            borderRadius: 5,
           }}
         >
-          <Text>드래그 아이콘</Text>
-        </View>
-      </TouchableOpacity>
-      {Component}
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <MaterialIcons name="drag-handle" size={24} color="grey" />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View>{Component}</View>
     </View>
   )
 }
