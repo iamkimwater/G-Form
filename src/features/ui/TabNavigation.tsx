@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import HomeTab from './HomeTab'
 import PreviewTab from './PreviewTab'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../types/navigation-type'
 
 const Tab = createMaterialBottomTabNavigator()
 
