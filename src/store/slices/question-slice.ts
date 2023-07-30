@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { formInitialState } from '../../store/initial-state'
+import { IFormQuestionState } from '../../types/form-type'
+import { QUESTION_TYPE } from '../../types/enums'
 import {
   CopyQuestionAction,
   DeleteQuestionAction,
@@ -10,9 +11,26 @@ import {
   SetQuestionTypeAction,
 } from '../../types/actions'
 
+const questionInitialState: IFormQuestionState = {
+  formQuestions: {
+    editingQuestionId: 1,
+    questionIds: [1],
+    questions: {
+      1: {
+        questionId: 1,
+        questionTitle: '제목 없는 질문',
+        pendingQuestionTitle: '제목 없는 질문',
+        questionType: QUESTION_TYPE.multipleChoice,
+        questionRequired: false,
+        choices: ['옵션1'],
+      },
+    },
+  },
+}
+
 export const questionSlice = createSlice({
   name: 'question',
-  initialState: formInitialState,
+  initialState: questionInitialState,
   reducers: {
     // 편집 상태 변경
     setEditingQuestionId: (state, action: setEditingQuestionIdAction) => {
@@ -73,7 +91,7 @@ export const questionSlice = createSlice({
     addQuestion: (state) => {
       const newQuestionId = Math.max(...state.formQuestions.questionIds) + 1
       state.formQuestions.questions[newQuestionId] = {
-        ...formInitialState.formQuestions.questions[1],
+        ...questionInitialState.formQuestions.questions[1],
         questionId: newQuestionId,
       }
       state.formQuestions.questionIds.push(newQuestionId)
