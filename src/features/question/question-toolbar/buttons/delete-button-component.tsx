@@ -3,7 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import React from 'react'
 import { DeleteButtonComponentProps } from '../../../../types/props'
 import { useDispatch } from 'react-redux'
-import { deleteQuestion } from '../../question-slice'
+import { deleteQuestion } from '../../../../store/slices/question-slice'
 
 const QuestionDeleteButtonComponent: React.FC<DeleteButtonComponentProps> = ({
   questionId,
