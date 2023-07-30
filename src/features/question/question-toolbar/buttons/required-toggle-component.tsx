@@ -3,14 +3,14 @@ import { Text, View } from 'react-native'
 import { Switch } from '@react-native-material/core'
 import { RequiredToggleComponentProps } from '../../../../types/props'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../../types/navigation-type'
 import { setQuestionRequired } from '../../../../store/slices/question-slice'
+import { RootState } from '../../../../types/navigation-type'
 
 const QuestionRequiredToggleComponent: React.FC<
   RequiredToggleComponentProps
-> = ({ questionId }) => {
+> = ({ questionId, questionRequired }) => {
   const question = useSelector(
-    (state: RootState) => state.question.formQuestions.questions[questionId],
+    (state: RootState) => state.question.questions[questionId],
   )
 
   const dispatch = useDispatch()
@@ -24,7 +24,7 @@ const QuestionRequiredToggleComponent: React.FC<
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text>필수</Text>
       <Switch
-        value={question?.questionRequired || false}
+        value={questionRequired || false}
         onValueChange={changeQuestionRequired}
       />
     </View>

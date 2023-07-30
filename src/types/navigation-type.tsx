@@ -1,4 +1,3 @@
-import index from '../store'
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import store from '../store'

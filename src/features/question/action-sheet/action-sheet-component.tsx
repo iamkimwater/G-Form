@@ -5,7 +5,7 @@ import { Button } from '@react-native-material/core'
 import { ActionSheetComponentProps } from '../../../types/props'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { QUESTION_TYPE } from '../../../types/enums'
-import { setQuestionType } from '../../../store/slices/question-slice'
+import { questionSlice } from '../../../store/slices/question-slice'
 
 const ActionSheetComponent: React.FC<ActionSheetComponentProps> = ({
   questionId,
@@ -15,7 +15,12 @@ const ActionSheetComponent: React.FC<ActionSheetComponentProps> = ({
   const dispatch = useDispatch()
 
   const selectQuestionType = (questionType: QUESTION_TYPE) =>
-    dispatch(setQuestionType({ questionId, newType: questionType }))
+    dispatch(
+      questionSlice.actions.setQuestionType({
+        questionId,
+        newType: questionType,
+      }),
+    )
 
   const changeQuestionType = () => {
     const options = ['단답형', '장문형', '객관식', '체크박스']

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import { TextInput } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../types/navigation-type'
+import { useDispatch } from 'react-redux'
 import { QuestionTitleComponentProps } from '../../../types/props'
 import {
   setPendingQuestionTitle,
@@ -10,26 +9,26 @@ import {
 
 const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
   questionId,
+  questionTitle,
+  pendingQuestionTitle,
 }) => {
-  const { questionTitle, pendingQuestionTitle } = useSelector(
-    (state: RootState) => state.question.formQuestions.questions[questionId],
-  )
-
   const dispatch = useDispatch()
 
-  const tryChangeQuestionTitle = (text: string) => {
-    if (text !== pendingQuestionTitle) {
-      dispatch(
-        setPendingQuestionTitle({ questionId, pendingQuestionTitle: text }),
-      )
-    }
-  }
-
-  const changeQuestionTitle = () => {
+  const tryChangeQuestionTitle = useCallback(
+    (text: string) => {
+      if (text !== pendingQuestionTitle) {
+        dispatch(
+          setPendingQuestionTitle({ questionId, pendingQuestionTitle: text }),
+        )
+      }
+    },
+    [pendingQuestionTitle],
+  )
+  const changeQuestionTitle = useCallback(() => {
     if (pendingQuestionTitle !== questionTitle) {
       dispatch(setQuestionTitle({ questionId }))
     }
-  }
+  }, [pendingQuestionTitle, questionTitle, questionId, dispatch])
 
   return (
     <TextInput

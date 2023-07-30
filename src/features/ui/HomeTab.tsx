@@ -5,18 +5,16 @@ import { RootState } from '../../types/navigation-type'
 import QuestionComponent from '../question/question-component'
 
 const HomeTab = () => {
-  const { questionIds } = useSelector(
-    (state: RootState) => state.question.formQuestions,
-  )
+  const { questions } = useSelector((state: RootState) => state.question)
 
   return (
     <FlatList
       ListHeaderComponent={<TitleComponent />}
-      data={questionIds}
+      data={questions}
       renderItem={({ item }) => (
-        <QuestionComponent key={item} questionId={item} />
+        <QuestionComponent key={item.questionId} question={item} />
       )}
-      keyExtractor={(item, index) => `${item}`}
+      keyExtractor={(item, index) => `${item.questionId}`}
     ></FlatList>
   )
 }

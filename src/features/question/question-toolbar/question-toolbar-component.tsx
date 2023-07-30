@@ -8,6 +8,7 @@ import { QuestionToolbarComponentProps } from '../../../types/props'
 
 const QuestionToolbarComponent: React.FC<QuestionToolbarComponentProps> = ({
   questionId,
+  questionRequired,
 }) => {
   return (
     <View
@@ -18,7 +19,10 @@ const QuestionToolbarComponent: React.FC<QuestionToolbarComponentProps> = ({
         margin: 5,
       }}
     >
-      <RequiredToggleComponent questionId={questionId} />
+      <RequiredToggleComponent
+        questionId={questionId}
+        questionRequired={questionRequired}
+      />
       <CopyButtonComponent questionId={questionId} />
       <DeleteButtonComponent questionId={questionId} />
       <AddButtonComponent />

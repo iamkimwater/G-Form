@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IFormQuestionState } from '../../types/form-type'
+import { IFormQuestionState, IQuestion } from '../../types/form-type'
 import { QUESTION_TYPE } from '../../types/enums'
 import {
   CopyQuestionAction,
@@ -11,90 +11,100 @@ import {
   SetQuestionTypeAction,
 } from '../../types/actions'
 
-const questionInitialState: IFormQuestionState = {
-  formQuestions: {
-    editingQuestionId: 1,
-    questionIds: [1],
-    questions: {
-      1: {
-        questionId: 1,
-        questionTitle: '제목 없는 질문',
-        pendingQuestionTitle: '제목 없는 질문',
-        questionType: QUESTION_TYPE.multipleChoice,
-        questionRequired: false,
-        choices: ['옵션1'],
-      },
-    },
-  },
+const defaultQuestion: IQuestion = {
+  questionId: 1,
+  questionTitle: '제목 없는 질문',
+  pendingQuestionTitle: '제목 없는 질문',
+  questionType: QUESTION_TYPE.multipleChoice,
+  questionRequired: false,
+  choices: ['옵션1'],
+}
+
+const formQuestionInitialState: IFormQuestionState = {
+  editingQuestionId: 1,
+  questions: [{ ...defaultQuestion }],
 }
 
 export const questionSlice = createSlice({
   name: 'question',
-  initialState: questionInitialState,
+  initialState: formQuestionInitialState,
   reducers: {
     // 편집 상태 변경
     setEditingQuestionId: (state, action: setEditingQuestionIdAction) => {
-      state.formQuestions.editingQuestionId = action.payload
+      const { questionId } = action.payload
+      state.editingQuestionId = questionId
     },
 
     // 질문 제목 변경
     setPendingQuestionTitle: (state, action: setPendingQuestionTitleAction) => {
       const { questionId, pendingQuestionTitle } = action.payload
-      state.formQuestions.questions[questionId].pendingQuestionTitle =
-        pendingQuestionTitle
+      const index = state.questions.findIndex(
+        (v) => v.questionId === questionId,
+      )
+      state.questions[index].pendingQuestionTitle = pendingQuestionTitle
     },
     setQuestionTitle: (state, action: setQuestionTitleAction) => {
       const { questionId } = action.payload
-      state.formQuestions.questions[questionId].questionTitle =
-        state.formQuestions.questions[questionId].pendingQuestionTitle
+      const index = state.questions.findIndex(
+        (v) => v.questionId === questionId,
+      )
+      state.questions[index].questionTitle =
+        state.questions[index].pendingQuestionTitle
     },
 
     // 질문 타입 변경
     setQuestionType: (state, action: SetQuestionTypeAction) => {
       const { questionId, newType } = action.payload
-      state.formQuestions.questions[questionId].questionType = newType
+      const index = state.questions.findIndex(
+        (v) => v.questionId === questionId,
+      )
+      state.questions[index].questionType = newType
     },
 
     // 질문 필수 여부 변경
     setQuestionRequired: (state, action: SetQuestionRequiredAction) => {
       const { questionId, required } = action.payload
-      if (state.formQuestions.questions[questionId]) {
-        state.formQuestions.questions[questionId].questionRequired = required
+      const index = state.questions.findIndex(
+        (v) => v.questionId === questionId,
+      )
+      if (state.questions[index]) {
+        state.questions[index].questionRequired = required
       }
     },
 
     // 질문 복사
     copyQuestion: (state, action: CopyQuestionAction) => {
       const { questionId } = action.payload
-      const originalQuestion = state.formQuestions.questions[questionId]
+      const originalQuestion = state.questions.find(
+        (v) => v.questionId === questionId,
+      )
 
       if (originalQuestion) {
-        const maxId = Math.max(
-          ...Object.keys(state.formQuestions.questions).map(Number),
-        )
+        const maxId = Math.max(...state.questions.map((v) => v.questionId))
         const newQuestion = { ...originalQuestion, questionId: maxId + 1 }
-        state.formQuestions.questions[newQuestion.questionId] = newQuestion
-        state.formQuestions.questionIds.push(newQuestion.questionId)
+        state.questions.push(newQuestion)
       }
     },
 
     // 질문 삭제
     deleteQuestion: (state, action: DeleteQuestionAction) => {
+      if (state.questions.length === 1) {
+        return
+      }
       const { questionId } = action.payload
-      delete state.formQuestions.questions[questionId]
-      state.formQuestions.questionIds = state.formQuestions.questionIds.filter(
-        (id) => id !== questionId,
+      const index = state.questions.findIndex(
+        (v) => v.questionId === questionId,
       )
+      state.questions.splice(index, 1)
     },
 
     // 질문 생성
     addQuestion: (state) => {
-      const newQuestionId = Math.max(...state.formQuestions.questionIds) + 1
-      state.formQuestions.questions[newQuestionId] = {
-        ...questionInitialState.formQuestions.questions[1],
-        questionId: newQuestionId,
-      }
-      state.formQuestions.questionIds.push(newQuestionId)
+      const maxId = Math.max(...state.questions.map((v) => v.questionId))
+      state.questions.push({
+        ...defaultQuestion,
+        questionId: maxId + 1,
+      })
     },
   },
 })

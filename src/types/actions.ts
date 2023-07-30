@@ -10,7 +10,9 @@ export type SetDescriptionAction = PayloadAction<{
 }>
 
 // question
-export type setEditingQuestionIdAction = PayloadAction<number | null>
+export type setEditingQuestionIdAction = PayloadAction<{
+  questionId: number
+}>
 
 export type setPendingQuestionTitleAction = PayloadAction<{
   questionId: number

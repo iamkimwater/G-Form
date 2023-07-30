@@ -18,6 +18,15 @@ const TitleComponent = () => {
     [title],
   )
 
+  const changeDescription = useCallback(
+    (text: string) => {
+      if (text !== description) {
+        dispatch(titleSlice.actions.setDescription({ description: text }))
+      }
+    },
+    [description],
+  )
+
   const titleTextInput = useMemo(() => {
     return (
       <TextInput
@@ -34,15 +43,6 @@ const TitleComponent = () => {
       />
     )
   }, [title])
-
-  const changeDescription = useCallback(
-    (text: string) => {
-      if (text !== description) {
-        dispatch(titleSlice.actions.setDescription({ description: text }))
-      }
-    },
-    [description],
-  )
 
   const descriptionTextInput = useMemo(() => {
     return (

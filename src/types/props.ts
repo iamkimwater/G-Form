@@ -1,30 +1,36 @@
 import { IQuestion } from './form-type'
+import { QUESTION_TYPE } from './enums'
 
 export interface QuestionComponentProps {
-  questionId: number
+  question: IQuestion
 }
 
 export interface QuestionTitleComponentProps {
   questionId: number
-  finishEditing: () => void
+  questionTitle: string
+  pendingQuestionTitle: string
 }
 
 export interface ActionSheetComponentProps {
   questionId: number
-  question: IQuestion
+  questionType: QUESTION_TYPE
 }
 
 export interface QuestionAnswerComponentProps {
-  questionId: number
-  question: IQuestion
+  questionType: QUESTION_TYPE
 }
 
 export interface QuestionToolbarComponentProps {
   questionId: number
-  question: IQuestion
+  questionRequired: boolean
 }
 
 export interface RequiredToggleComponentProps {
+  questionId: number
+  questionRequired: boolean
+}
+
+export interface AddButtonComponentProps {
   questionId: number
 }
 
