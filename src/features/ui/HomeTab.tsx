@@ -1,4 +1,3 @@
-import { Text, TouchableOpacity, View } from 'react-native'
 import TitleComponent from '../title/title-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../types/navigation-type'
@@ -8,6 +7,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist'
 import { IQuestion } from '../../types/form-type'
+import draggable from '../../hoc/draggable'
 
 const HomeTab = () => {
   const { questions } = useSelector((state: RootState) => state.question)
@@ -15,7 +15,6 @@ const HomeTab = () => {
   const dispatch = useDispatch()
 
   const reorderQuestions = (data) => {
-    console.log('드래그 끝남')
     dispatch(
       questionSlice.actions.changeOrder({
         new_questions: data,
@@ -26,32 +25,13 @@ const HomeTab = () => {
   return (
     <DraggableFlatList
       ListHeaderComponent={<TitleComponent />}
-      onDragBegin={() => {
-        console.log('드래그 시작돔')
-      }}
       onDragEnd={({ data }) => reorderQuestions(data)}
       data={questions}
-      renderItem={({ item, drag, isActive }: RenderItemParams<IQuestion>) => (
-        <View>
-          <TouchableOpacity
-            onLongPress={drag}
-            disabled={isActive}
-            style={{ backgroundColor: isActive ? '#b9b9b9' : 'white' }}
-          >
-            <View
-              style={{
-                backgroundColor: 'grey',
-                height: 20,
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            >
-              <Text>드래그 아이콘</Text>
-            </View>
-          </TouchableOpacity>
-          <QuestionComponent key={item.questionId} question={item} />
-        </View>
-      )}
+      renderItem={({ item, drag, isActive }: RenderItemParams<IQuestion>) =>
+        draggable({ options: { drag, isActive } })(
+          <QuestionComponent key={item.questionId} question={item} />,
+        )
+      }
       keyExtractor={(item, index) => `${item.questionId}`}
     />
   )
