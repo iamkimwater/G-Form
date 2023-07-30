@@ -36,22 +36,28 @@ export type IQuestion =
   | IMultipleChoiceQuestion
   | ICheckboxQuestion
 
-export interface IQuestions {
+export interface IFormQuestions {
   editingQuestionId: number | null
   questionIds: number[]
   questions: { [questionId: number]: IQuestion }
 }
 
-export interface ITitle {
-  title: string
-  description: string
-  pendingTitle: string
-  pendingDescription: string
-}
-
 export interface IForm {
   formId: number
-  formTitle: ITitle
-  formQuestions: IQuestions
+  formTitle: IFormTitleState
+  formQuestions: IFormQuestions
   previewMode: boolean
+}
+
+export interface IFormPreviewState {
+  previewMode: boolean
+}
+
+export interface IFormQuestionState {
+  formQuestions: IFormQuestions
+}
+
+export interface IFormTitleState {
+  title: string
+  description: string
 }

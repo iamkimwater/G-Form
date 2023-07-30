@@ -2,8 +2,12 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { QUESTION_TYPE } from './enums'
 
 // title
-export type SetPendingTitleAction = PayloadAction<string>
-export type SetPendingDescriptionAction = PayloadAction<string>
+export type SetTitleAction = PayloadAction<{
+  title: string
+}>
+export type SetDescriptionAction = PayloadAction<{
+  description: string
+}>
 
 // question
 export type setEditingQuestionIdAction = PayloadAction<number | null>
