@@ -18,13 +18,23 @@ interface ILongAnswerQuestion extends IDefaultQuestion {
   // 답변이 변경되지 않는 텍스트로 제공됨 (설문작성자가 답변을 입력할 필요가 없으므로)
 }
 
-interface IMultipleChoiceQuestion extends IDefaultQuestion {
+export interface IChoice {
+  content: string | undefined
+  isSelected: boolean
+}
+
+export interface IOtherChoice extends IChoice {
+  useState: boolean
+}
+
+export interface IMultipleChoiceQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.multipleChoice
-  choices: string[]
+  choices: IChoice[]
+  otherChoice: IOtherChoice
   // 기타 추가를 누르면 변경되지 않는 텍스트 답변이 추가됨 (설문작성자가 답변을 입력할 필요가 없으므로)
 }
 
-interface ICheckboxQuestion extends IDefaultQuestion {
+export interface ICheckboxQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.checkbox
   choices: string[]
   // 기타 추가를 누르면 변경되지 않는 텍스트 답변이 추가됨 (설문작성자가 답변을 입력할 필요가 없으므로)

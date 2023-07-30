@@ -46,7 +46,21 @@ export type AddChoiceAction = PayloadAction<{
   newChoice: string
 }>
 
+export type MakeChoiceAction = PayloadAction<{
+  questionId: number
+  choiceIndex?: number
+  isOtherChoice: boolean
+}>
+
 export type DeleteChoiceAction = PayloadAction<{
   questionId: number
-  deletedChoice: string
+  choiceIndex: number
+}>
+
+export type AddOtherChoiceAction = PayloadAction<{
+  questionId: number
+}>
+
+export type DeleteOtherChoiceAction = PayloadAction<{
+  questionId: number
 }>

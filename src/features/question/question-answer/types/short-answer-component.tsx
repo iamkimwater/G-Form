@@ -1,10 +1,11 @@
 import { TextInput, View } from 'react-native'
 import React from 'react'
-import { ShortAnswerComponentProps } from '../../../../types/props'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../../types/navigation-type'
 
-const ShortAnswerComponent: React.FC<ShortAnswerComponentProps> = ({
-  previewMode,
-}) => {
+const ShortAnswerComponent = () => {
+  const { previewMode } = useSelector((state: RootState) => state.preview)
+
   return (
     <View>
       <TextInput

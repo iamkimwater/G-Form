@@ -55,10 +55,7 @@ const QuestionDetailComponent = (props: {
             justifyContent: 'space-between',
           }}
         >
-          <QuestionAnswerComponent
-            questionId={question.questionId}
-            questionType={question.questionType}
-          />
+          <QuestionAnswerComponent question={question} />
         </View>
       </View>
       <View

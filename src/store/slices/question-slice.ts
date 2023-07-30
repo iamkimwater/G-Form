@@ -3,9 +3,12 @@ import { IFormQuestionState, IQuestion } from '../../types/form-type'
 import { QUESTION_TYPE } from '../../types/enums'
 import {
   AddChoiceAction,
+  AddOtherChoiceAction,
   CopyQuestionAction,
   DeleteChoiceAction,
+  DeleteOtherChoiceAction,
   DeleteQuestionAction,
+  MakeChoiceAction,
   setEditingQuestionIdAction,
   setPendingQuestionTitleAction,
   SetQuestionRequiredAction,
@@ -19,7 +22,8 @@ const defaultQuestion: IQuestion = {
   pendingQuestionTitle: '제목 없는 질문',
   questionType: QUESTION_TYPE.multipleChoice,
   questionRequired: false,
-  choices: ['옵션1'],
+  choices: [{ content: '옵션1', isSelected: false }],
+  otherChoice: { content: undefined, isSelected: false, useState: false },
 }
 
 const formQuestionInitialState: IFormQuestionState = {
@@ -119,19 +123,78 @@ export const questionSlice = createSlice({
     addChoice: (state, action: AddChoiceAction) => {
       const { questionId, newChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
-      if ('choices' in question) {
-        question.choices.push(newChoice)
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        question.choices.push({ content: newChoice, isSelected: false })
+      }
+    },
+    makeChoice: (state, action: MakeChoiceAction) => {
+      const { questionId, choiceIndex, isOtherChoice } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        if (!isOtherChoice) {
+          if (question.otherChoice.isSelected) {
+            question.otherChoice.isSelected = false
+          } else {
+            const selectedChoice = question.choices.find(
+              (choice) => choice.isSelected === true,
+            )
+            if (selectedChoice) {
+              selectedChoice.isSelected = false
+            }
+          }
+          question.choices[choiceIndex].isSelected = true
+        } else {
+          const selectedChoice = question.choices.find(
+            (choice) => choice.isSelected === true,
+          )
+          if (selectedChoice) {
+            selectedChoice.isSelected = false
+          }
+          question.otherChoice.isSelected = true
+        }
+      }
+    },
+
+    // 기타 선택지
+    addOtherChoice: (state, action: AddOtherChoiceAction) => {
+      const { questionId } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        question.otherChoice.useState = true
+      }
+    },
+    setOtherChoice: (state, action) => {
+      const { questionId, content } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        question.otherChoice.content = content
+      }
+    },
+    deleteOtherChoice: (state, action: DeleteOtherChoiceAction) => {
+      const { questionId } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        question.otherChoice.useState = false
+        question.otherChoice.content = undefined
+        question.otherChoice.isSelected = false
+      }
+    },
+
+    // 선택지 변경
+    setChoiceContent: (state, action) => {
+      const { questionId, choiceIndex, content } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        question.choices[choiceIndex].content = content
       }
     },
 
     // 선택지 삭제 (객관식, 체크박스인 경우)
     deleteChoice: (state, action: DeleteChoiceAction) => {
-      const { questionId, deletedChoice } = action.payload
+      const { questionId, choiceIndex } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
-      if ('choices' in question) {
-        question.choices = question.choices.filter(
-          (choice) => choice !== deletedChoice,
-        )
+      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+        question.choices.splice(choiceIndex, 1)
       }
     },
   },

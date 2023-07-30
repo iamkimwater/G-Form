@@ -1,4 +1,8 @@
-import { IQuestion } from './form-type'
+import {
+  ICheckboxQuestion,
+  IMultipleChoiceQuestion,
+  IQuestion,
+} from './form-type'
 import { QUESTION_TYPE } from './enums'
 
 export interface QuestionComponentProps {
@@ -17,8 +21,7 @@ export interface ActionSheetComponentProps {
 }
 
 export interface QuestionAnswerComponentProps {
-  questionId: number
-  questionType: QUESTION_TYPE
+  question: IQuestion
 }
 
 export interface QuestionToolbarComponentProps {
@@ -31,10 +34,6 @@ export interface RequiredToggleComponentProps {
   questionRequired: boolean
 }
 
-export interface AddButtonComponentProps {
-  questionId: number
-}
-
 export interface CopyButtonComponentProps {
   questionId: number
 }
@@ -43,20 +42,10 @@ export interface DeleteButtonComponentProps {
   questionId: number
 }
 
-export interface ShortAnswerComponentProps {
-  previewMode: boolean
-}
-
-export interface LongAnswerComponentProps {
-  previewMode: boolean
-}
-
 export interface MultipleChoiceComponentProps {
-  questionId: number
-  previewMode: boolean
+  question: IMultipleChoiceQuestion
 }
 
 export interface CheckboxComponentProps {
-  questionId: number
-  previewMode: boolean
+  question: ICheckboxQuestion
 }
