@@ -49,8 +49,7 @@ const ActionSheetComponent: React.FC<ActionSheetComponentProps> = ({
             selectQuestionType(QUESTION_TYPE.checkbox)
             break
 
-          case cancelButtonIndex:
-            selectQuestionType(QUESTION_TYPE.multipleChoice)
+          default:
             break
         }
       },
