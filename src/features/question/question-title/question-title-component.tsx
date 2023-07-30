@@ -3,7 +3,10 @@ import { TextInput } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../types/navigation-type'
 import { QuestionTitleComponentProps } from '../../../types/props'
-import { setPendingQuestionTitle, setQuestionTitle } from '../question-slice'
+import {
+  setPendingQuestionTitle,
+  setQuestionTitle,
+} from '../../../store/slices/question-slice'
 
 const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
   questionId,

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import titleReducer from '../features/title/title-slice'
-import questionReducer from '../features/question/question-slice'
-import previewReducer from '../features/preview/preview-slice'
+import titleReducer from './slices/title-slice'
+import questionReducer from './slices/question-slice'
+import previewReducer from './slices/preview-slice'
 
 const store = configureStore({
   reducer: {

@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { NavigationContainer } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import HomeTab from './HomeTab'
-import PreviewTab from '../preview/PreviewTab'
+import PreviewTab from './PreviewTab'
 
 const Tab = createMaterialBottomTabNavigator()
 

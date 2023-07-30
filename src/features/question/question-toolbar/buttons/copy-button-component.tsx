@@ -3,7 +3,7 @@ import { IconButton } from '@react-native-material/core'
 import { MaterialIcons } from '@expo/vector-icons'
 import { CopyButtonComponentProps } from '../../../../types/props'
 import { useDispatch } from 'react-redux'
-import { copyQuestion } from '../../question-slice'
+import { copyQuestion } from '../../../../store/slices/question-slice'
 
 const QuestionCopyButtonComponent: React.FC<CopyButtonComponentProps> = ({
   questionId,

@@ -4,7 +4,7 @@ import { Switch } from '@react-native-material/core'
 import { RequiredToggleComponentProps } from '../../../../types/props'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../../types/navigation-type'
-import { setQuestionRequired } from '../../question-slice'
+import { setQuestionRequired } from '../../../../store/slices/question-slice'
 
 const QuestionRequiredToggleComponent: React.FC<
   RequiredToggleComponentProps

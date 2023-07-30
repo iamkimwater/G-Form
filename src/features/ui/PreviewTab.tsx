@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
-import { setPreviewMode } from './preview-slice'
+import { setPreviewMode } from '../../store/slices/preview-slice'
 import { RootState } from '../../types/navigation-type'
 
 const PreviewTab = () => {
