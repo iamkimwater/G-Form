@@ -1,13 +1,23 @@
-import { ScrollView } from 'react-native'
+import { FlatList } from 'react-native'
 import TitleComponent from '../title/title-component'
-import QuestionsComponent from '../questions/questions-component'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../types/navigation-type'
+import QuestionComponent from '../question/question-component'
 
 const HomeTab = () => {
+  const { questionIds } = useSelector(
+    (state: RootState) => state.question.formQuestions,
+  )
+
   return (
-    <ScrollView>
-      <TitleComponent />
-      <QuestionsComponent />
-    </ScrollView>
+    <FlatList
+      ListHeaderComponent={<TitleComponent />}
+      data={questionIds}
+      renderItem={({ item }) => (
+        <QuestionComponent key={item} questionId={item} />
+      )}
+      keyExtractor={(item, index) => `${item}`}
+    ></FlatList>
   )
 }
 
