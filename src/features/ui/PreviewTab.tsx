@@ -1,15 +1,15 @@
-import { View } from 'react-native'
+import { FlatList } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { setPreviewMode } from '../../store/slices/preview-slice'
-import { RootState } from '../../types/navigation-type'
-import ShortAnswerComponent from '../question/question-answer/types/short-answer-component'
-import LongAnswerComponent from '../question/question-answer/types/long-answer-component'
-import MultipleChoiceComponent from '../question/question-answer/types/multiple-choice-component'
-import CheckboxComponent from '../question/question-answer/types/checkbox-component'
+import { PreviewProps, RootState } from '../../types/navigation-type'
+import TitleComponent from '../title/title-component'
+import QuestionIntroComponent from '../question/question-intro-component'
+import { questionSlice } from '../../store/slices/question-slice'
 
-const PreviewTab = () => {
+const PreviewTab: React.FC<PreviewProps> = (questionId) => {
+  const { questions } = useSelector((state: RootState) => state.question)
   const { previewMode } = useSelector((state: RootState) => state.preview)
 
   const dispatch = useDispatch()
@@ -26,49 +26,23 @@ const PreviewTab = () => {
 
   console.log(`previewMode: ${previewMode}`)
 
+  const changeEditingState = () => {
+    dispatch(questionSlice.actions.setEditingQuestionId())
+  }
+
   return (
-    <View>
-      <View
-        style={{
-          margin: 10,
-          padding: 20,
-          borderStyle: 'solid',
-          borderWidth: 0.5,
-        }}
-      >
-        <ShortAnswerComponent previewMode={previewMode} />
-      </View>
-      <View
-        style={{
-          margin: 10,
-          padding: 20,
-          borderStyle: 'solid',
-          borderWidth: 0.5,
-        }}
-      >
-        <LongAnswerComponent previewMode={previewMode} />
-      </View>
-      <View
-        style={{
-          margin: 10,
-          padding: 20,
-          borderStyle: 'solid',
-          borderWidth: 0.5,
-        }}
-      >
-        <MultipleChoiceComponent previewMode={previewMode} />
-      </View>
-      <View
-        style={{
-          margin: 10,
-          padding: 20,
-          borderStyle: 'solid',
-          borderWidth: 0.5,
-        }}
-      >
-        <CheckboxComponent previewMode={previewMode} />
-      </View>
-    </View>
+    <FlatList
+      ListHeaderComponent={<TitleComponent />}
+      data={questions}
+      renderItem={({ item }) => (
+        <QuestionIntroComponent
+          key={item.questionId}
+          question={item}
+          changeEditingState={changeEditingState}
+        />
+      )}
+      keyExtractor={(item, index) => `${item.questionId}`}
+    ></FlatList>
   )
 }
 export default PreviewTab

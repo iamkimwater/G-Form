@@ -1,11 +1,13 @@
-import { TextInput, View } from 'react-native'
+import { TextInput, View, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../types/navigation-type'
 import { titleSlice } from '../../store/slices/title-slice'
-import { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
+import { Button } from '@react-native-material/core'
 
 const TitleComponent = () => {
   const { title, description } = useSelector((state: RootState) => state.title)
+  const { previewMode } = useSelector((state: RootState) => state.preview)
 
   const dispatch = useDispatch()
 
@@ -27,39 +29,6 @@ const TitleComponent = () => {
     [description],
   )
 
-  const titleTextInput = useMemo(() => {
-    return (
-      <TextInput
-        value={title}
-        multiline={true}
-        onChangeText={changeTitle}
-        style={{
-          marginTop: 20,
-          marginStart: 20,
-          marginEnd: 20,
-          fontSize: 30,
-          color: '#000000',
-        }}
-      />
-    )
-  }, [title])
-
-  const descriptionTextInput = useMemo(() => {
-    return (
-      <TextInput
-        placeholder="설문지 설명"
-        multiline={true}
-        value={description}
-        onChangeText={changeDescription}
-        style={{
-          margin: 20,
-          fontSize: 16,
-          color: '#000000',
-        }}
-      />
-    )
-  }, [description])
-
   return (
     <View
       style={{
@@ -69,8 +38,50 @@ const TitleComponent = () => {
         borderRadius: 5,
       }}
     >
-      {titleTextInput}
-      {descriptionTextInput}
+      <TextInput
+        value={title}
+        multiline={true}
+        onChangeText={changeTitle}
+        editable={!previewMode}
+        style={{
+          marginTop: 20,
+          marginStart: 20,
+          marginEnd: 20,
+          fontSize: 30,
+          color: '#000000',
+        }}
+      />
+      {(!previewMode || (previewMode && description)) && (
+        <TextInput
+          placeholder="설문지 설명"
+          multiline={true}
+          value={description}
+          onChangeText={changeDescription}
+          editable={!previewMode}
+          style={{
+            margin: 20,
+            fontSize: 16,
+            color: '#000000',
+          }}
+        />
+      )}
+      {previewMode && (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+        >
+          <Text>iamkimwater@gmail.com</Text>
+          <Button
+            variant="text"
+            title="계정 전환"
+            color={'#797979'}
+            titleStyle={{ fontSize: 16 }}
+          />
+        </View>
+      )}
     </View>
   )
 }
