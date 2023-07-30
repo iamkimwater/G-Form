@@ -20,12 +20,18 @@ const QuestionDetailComponent = (props: {
         marginRight: 10,
         marginBottom: 10,
         borderStyle: 'solid',
-        borderWidth: 0.7,
-        borderRadius: 5,
+        borderWidth: 1,
+        borderRadius: 3,
         justifyContent: 'space-between',
       }}
       activeOpacity={1}
     >
+      <View
+        style={{
+          height: 5,
+          backgroundColor: '#000000',
+        }}
+      />
       <View style={{ marginTop: 10, marginStart: 20, marginEnd: 20 }}>
         <QuestionTitleComponent
           questionId={question.questionId}

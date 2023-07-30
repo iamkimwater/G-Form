@@ -61,6 +61,7 @@ const ActionSheetComponent: React.FC<ActionSheetComponentProps> = ({
       <Button
         title="Select Question Type"
         titleStyle={{ fontSize: 16 }}
+        color={'black'}
         contentContainerStyle={{ height: 40 }}
         onPress={changeQuestionType}
       />

@@ -34,10 +34,11 @@ const TitleComponent = () => {
       style={{
         margin: 10,
         borderStyle: 'solid',
-        borderWidth: 0.7,
-        borderRadius: 5,
+        borderWidth: 1,
+        borderRadius: 3,
       }}
     >
+      <View style={{ height: 5, backgroundColor: '#000000' }} />
       <TextInput
         value={title}
         multiline={true}
@@ -71,6 +72,9 @@ const TitleComponent = () => {
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
+            paddingLeft: 20,
+            paddingTop: 10,
+            paddingBottom: 10,
           }}
         >
           <Text>iamkimwater@gmail.com</Text>

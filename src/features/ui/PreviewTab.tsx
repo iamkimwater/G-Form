@@ -10,7 +10,6 @@ import { questionSlice } from '../../store/slices/question-slice'
 
 const PreviewTab: React.FC<PreviewProps> = (questionId) => {
   const { questions } = useSelector((state: RootState) => state.question)
-  const { previewMode } = useSelector((state: RootState) => state.preview)
 
   const dispatch = useDispatch()
 
@@ -23,8 +22,6 @@ const PreviewTab: React.FC<PreviewProps> = (questionId) => {
       }
     }, [dispatch]),
   )
-
-  console.log(`previewMode: ${previewMode}`)
 
   const changeEditingState = () => {
     dispatch(questionSlice.actions.setEditingQuestionId())

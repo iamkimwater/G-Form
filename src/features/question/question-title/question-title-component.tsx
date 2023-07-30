@@ -1,17 +1,20 @@
 import React, { useCallback } from 'react'
 import { TextInput } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { QuestionTitleComponentProps } from '../../../types/props'
 import {
   setPendingQuestionTitle,
   setQuestionTitle,
 } from '../../../store/slices/question-slice'
+import { RootState } from '../../../types/navigation-type'
 
 const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
   questionId,
   questionTitle,
   pendingQuestionTitle,
 }) => {
+  const { previewMode } = useSelector((root: RootState) => root.preview)
+
   const dispatch = useDispatch()
 
   const tryChangeQuestionTitle = useCallback(
@@ -35,6 +38,7 @@ const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
       value={pendingQuestionTitle}
       multiline={true}
       onChangeText={tryChangeQuestionTitle}
+      editable={!previewMode}
       onBlur={changeQuestionTitle}
       style={{
         fontSize: 18,

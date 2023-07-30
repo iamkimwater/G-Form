@@ -63,7 +63,7 @@ const OtherChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
         <TextInput
           placeholder={'기타'}
           value={previewMode ? question.otherChoice.content : '기타'}
-          multiline={!!previewMode}
+          multiline={!previewMode}
           editable={previewMode}
           style={{
             flex: 1,

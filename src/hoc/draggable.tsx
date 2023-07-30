@@ -18,13 +18,13 @@ const Draggable = (props: {
           onLongPress={drag}
           disabled={isActive}
           style={{
-            backgroundColor: isActive ? '#c9c8c8' : '#e3e2e2',
+            backgroundColor: isActive ? '#c9c8c8' : '#000000',
             width: 70,
-            borderRadius: 5,
+            borderRadius: 2,
           }}
         >
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <MaterialIcons name="drag-handle" size={24} color="grey" />
+            <MaterialIcons name="drag-handle" size={15} color="white" />
           </View>
         </TouchableOpacity>
       </View>
