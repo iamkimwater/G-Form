@@ -1,5 +1,5 @@
+import React, { useRef } from 'react'
 import { TextInput, View } from 'react-native'
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RadioButton } from 'react-native-paper'
 import { questionSlice } from '../../../../../store/slices/question-slice'
@@ -11,6 +11,7 @@ import { Feather } from '@expo/vector-icons'
 const OtherChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
   question,
 }) => {
+  const textInputRef = useRef<TextInput>()
   const { previewMode } = useSelector((root: RootState) => root.preview)
   const dispatch = useDispatch()
 
@@ -30,6 +31,20 @@ const OtherChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
     )
   }
   const makeOtherChoice = () => {
+    if (!previewMode) {
+      return
+    }
+    dispatch(
+      questionSlice.actions.makeChoice({
+        questionId: question.questionId,
+        isOtherChoice: true,
+      }),
+    )
+    if (textInputRef.current) {
+      textInputRef.current.focus()
+    }
+  }
+  const onHandleFocus = () => {
     if (!previewMode) {
       return
     }
@@ -61,6 +76,7 @@ const OtherChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
           onPress={makeOtherChoice}
         />
         <TextInput
+          ref={textInputRef}
           placeholder={'기타'}
           value={previewMode ? question.otherChoice.content : '기타'}
           multiline={!previewMode}
@@ -70,6 +86,7 @@ const OtherChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
             fontSize: 16,
           }}
           onChangeText={changeOtherChoice}
+          onFocus={onHandleFocus}
         />
         {!previewMode ? (
           <View style={{ justifyContent: 'flex-end' }}>

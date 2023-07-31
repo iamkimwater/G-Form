@@ -23,23 +23,26 @@ const PreviewTab: React.FC<PreviewProps> = (questionId) => {
     }, [dispatch]),
   )
 
-  const changeEditingState = () => {
-    dispatch(questionSlice.actions.setEditingQuestionId())
+  const changeEditingState = (questionId) => {
+    dispatch(
+      questionSlice.actions.setEditingQuestionId({ questionId: questionId }),
+    )
   }
 
   return (
     <FlatList
+      removeClippedSubviews={false}
       ListHeaderComponent={<TitleComponent />}
       data={questions}
       renderItem={({ item }) => (
         <QuestionIntroComponent
           key={item.questionId}
           question={item}
-          changeEditingState={changeEditingState}
+          changeEditingState={() => changeEditingState(item.questionId)}
         />
       )}
       keyExtractor={(item, index) => `${item.questionId}`}
-    ></FlatList>
+    />
   )
 }
 export default PreviewTab

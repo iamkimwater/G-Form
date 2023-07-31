@@ -131,9 +131,24 @@ export const questionSlice = createSlice({
       const { questionId, choiceIndex, isOtherChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
       if (question.questionType === QUESTION_TYPE.multipleChoice) {
-        if (!isOtherChoice) {
-          if (question.otherChoice.isSelected) {
-            question.otherChoice.isSelected = false
+        const { questionId, choiceIndex, isOtherChoice } = action.payload
+        const question = state.questions.find(
+          (v) => v.questionId === questionId,
+        )
+        if (question.questionType === QUESTION_TYPE.multipleChoice) {
+          if (!isOtherChoice) {
+            if (question.otherChoice.isSelected) {
+              question.otherChoice.isSelected = false
+              question.otherChoice.content = undefined
+            } else {
+              const selectedChoice = question.choices.find(
+                (choice) => choice.isSelected === true,
+              )
+              if (selectedChoice) {
+                selectedChoice.isSelected = false
+              }
+            }
+            question.choices[choiceIndex].isSelected = true
           } else {
             const selectedChoice = question.choices.find(
               (choice) => choice.isSelected === true,
@@ -141,16 +156,8 @@ export const questionSlice = createSlice({
             if (selectedChoice) {
               selectedChoice.isSelected = false
             }
+            question.otherChoice.isSelected = true
           }
-          question.choices[choiceIndex].isSelected = true
-        } else {
-          const selectedChoice = question.choices.find(
-            (choice) => choice.isSelected === true,
-          )
-          if (selectedChoice) {
-            selectedChoice.isSelected = false
-          }
-          question.otherChoice.isSelected = true
         }
       }
     },
@@ -200,15 +207,4 @@ export const questionSlice = createSlice({
   },
 })
 
-export const {
-  setEditingQuestionId,
-  setPendingQuestionTitle,
-  setQuestionTitle,
-  setQuestionType,
-  setQuestionRequired,
-  copyQuestion,
-  deleteQuestion,
-  addQuestion,
-  addChoice,
-} = questionSlice.actions
 export default questionSlice.reducer

@@ -2,10 +2,7 @@ import React, { useCallback } from 'react'
 import { TextInput } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { QuestionTitleComponentProps } from '../../../types/props'
-import {
-  setPendingQuestionTitle,
-  setQuestionTitle,
-} from '../../../store/slices/question-slice'
+import { questionSlice } from '../../../store/slices/question-slice'
 import { RootState } from '../../../types/navigation-type'
 
 const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
@@ -21,7 +18,10 @@ const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
     (text: string) => {
       if (text !== pendingQuestionTitle) {
         dispatch(
-          setPendingQuestionTitle({ questionId, pendingQuestionTitle: text }),
+          questionSlice.actions.setPendingQuestionTitle({
+            questionId,
+            pendingQuestionTitle: text,
+          }),
         )
       }
     },
@@ -29,7 +29,7 @@ const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
   )
   const changeQuestionTitle = useCallback(() => {
     if (pendingQuestionTitle !== questionTitle) {
-      dispatch(setQuestionTitle({ questionId }))
+      dispatch(questionSlice.actions.setQuestionTitle({ questionId }))
     }
   }, [pendingQuestionTitle, questionTitle, questionId, dispatch])
 

@@ -5,12 +5,15 @@ import ActionSheetComponent from './action-sheet/action-sheet-component'
 import QuestionAnswerComponent from './question-answer/question-answer-component'
 import QuestionToolbarComponent from './question-toolbar/question-toolbar-component'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../types/navigation-type'
 
 const QuestionDetailComponent = (props: {
   question: IQuestion
   changeEditingState: () => void
 }) => {
   const { question, changeEditingState } = props
+  const { previewMode } = useSelector((root: RootState) => root.preview)
 
   return (
     <TouchableOpacity
@@ -40,19 +43,21 @@ const QuestionDetailComponent = (props: {
         />
       </View>
       <View>
-        <View
-          style={{
-            marginTop: 10,
-            marginStart: 20,
-            marginEnd: 20,
-            justifyContent: 'space-between',
-          }}
-        >
-          <ActionSheetComponent
-            questionId={question.questionId}
-            questionType={question.questionType}
-          />
-        </View>
+        {!previewMode ? (
+          <View
+            style={{
+              marginTop: 10,
+              marginStart: 20,
+              marginEnd: 20,
+              justifyContent: 'space-between',
+            }}
+          >
+            <ActionSheetComponent
+              questionId={question.questionId}
+              questionType={question.questionType}
+            />
+          </View>
+        ) : null}
         <View
           style={{
             marginTop: 10,
@@ -64,21 +69,23 @@ const QuestionDetailComponent = (props: {
           <QuestionAnswerComponent question={question} />
         </View>
       </View>
-      <View
-        style={{
-          marginTop: 10,
-          marginBottom: 10,
-          marginStart: 20,
-          marginEnd: 20,
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-        }}
-      >
-        <QuestionToolbarComponent
-          questionId={question.questionId}
-          questionRequired={question.questionRequired}
-        />
-      </View>
+      {!previewMode ? (
+        <View
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+            marginStart: 20,
+            marginEnd: 20,
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+          }}
+        >
+          <QuestionToolbarComponent
+            questionId={question.questionId}
+            questionRequired={question.questionRequired}
+          />
+        </View>
+      ) : null}
     </TouchableOpacity>
   )
 }

@@ -24,6 +24,7 @@ const HomeTab = () => {
 
   return (
     <DraggableFlatList
+      removeClippedSubviews={false}
       ListHeaderComponent={<TitleComponent />}
       onDragEnd={({ data }) => reorderQuestions(data)}
       data={questions}
