@@ -10,12 +10,10 @@ interface IDefaultQuestion {
 
 interface IShortAnswerQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.shortAnswer
-  // 답변이 변경되지 않는 텍스트로 제공됨 (설문작성자가 답변을 입력할 필요가 없으므로)
 }
 
 interface ILongAnswerQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.longAnswer
-  // 답변이 변경되지 않는 텍스트로 제공됨 (설문작성자가 답변을 입력할 필요가 없으므로)
 }
 
 export interface IChoice {
@@ -23,21 +21,20 @@ export interface IChoice {
   isSelected: boolean
 }
 
-export interface IOtherChoice extends IChoice {
+export interface IEtcChoice extends IChoice {
   useState: boolean
 }
 
 export interface IMultipleChoiceQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.multipleChoice
   choices: IChoice[]
-  otherChoice: IOtherChoice
-  // 기타 추가를 누르면 변경되지 않는 텍스트 답변이 추가됨 (설문작성자가 답변을 입력할 필요가 없으므로)
+  etcChoice: IEtcChoice
 }
 
 export interface ICheckboxQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.checkbox
-  choices: string[]
-  // 기타 추가를 누르면 변경되지 않는 텍스트 답변이 추가됨 (설문작성자가 답변을 입력할 필요가 없으므로)
+  choices: IChoice[]
+  etcChoice: IEtcChoice
 }
 
 export type IQuestion =

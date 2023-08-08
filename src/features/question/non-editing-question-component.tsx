@@ -2,13 +2,11 @@ import { IQuestion } from '../../types/form-type'
 import { Text, TouchableOpacity, View } from 'react-native'
 import QuestionAnswerComponent from './question-answer/question-answer-component'
 import React from 'react'
+import { NonEditingQuestionComponentProps } from '../../types/props'
 
-const QuestionIntroComponent = (props: {
-  question: IQuestion
-  changeEditingState: () => void
-}) => {
-  const { question, changeEditingState } = props
-
+const NonEditingQuestionComponent: React.FC<
+  NonEditingQuestionComponentProps
+> = ({ question, changeEditingState }) => {
   return (
     <TouchableOpacity
       onPress={changeEditingState}
@@ -17,6 +15,7 @@ const QuestionIntroComponent = (props: {
         marginRight: 10,
         marginBottom: 10,
         borderStyle: 'solid',
+        borderTopWidth: 7,
         borderWidth: 0.7,
         borderRadius: 5,
         justifyContent: 'space-between',
@@ -41,4 +40,4 @@ const QuestionIntroComponent = (props: {
     </TouchableOpacity>
   )
 }
-export default QuestionIntroComponent
+export default NonEditingQuestionComponent

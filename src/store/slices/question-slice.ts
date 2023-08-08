@@ -3,7 +3,7 @@ import { IFormQuestionState, IQuestion } from '../../types/form-type'
 import { QUESTION_TYPE } from '../../types/enums'
 import {
   AddChoiceAction,
-  AddOtherChoiceAction,
+  AddEtcChoiceAction,
   CopyQuestionAction,
   DeleteChoiceAction,
   DeleteOtherChoiceAction,
@@ -23,7 +23,7 @@ const defaultQuestion: IQuestion = {
   questionType: QUESTION_TYPE.multipleChoice,
   questionRequired: false,
   choices: [{ content: '옵션1', isSelected: false }],
-  otherChoice: { content: undefined, isSelected: false, useState: false },
+  etcChoice: { content: undefined, isSelected: false, useState: false },
 }
 
 const formQuestionInitialState: IFormQuestionState = {
@@ -41,7 +41,7 @@ export const questionSlice = createSlice({
       state.editingQuestionId = questionId
     },
 
-    // 질문 제목 변경
+    // 질문 제목 변경1
     setPendingQuestionTitle: (state, action: setPendingQuestionTitleAction) => {
       const { questionId, pendingQuestionTitle } = action.payload
       const index = state.questions.findIndex(
@@ -119,7 +119,7 @@ export const questionSlice = createSlice({
       state.questions = new_questions
     },
 
-    // 선택지 생성 (객관식, 체크박스인 경우)
+    // 선택지 생성
     addChoice: (state, action: AddChoiceAction) => {
       const { questionId, newChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -127,67 +127,17 @@ export const questionSlice = createSlice({
         question.choices.push({ content: newChoice, isSelected: false })
       }
     },
-    makeChoice: (state, action: MakeChoiceAction) => {
-      const { questionId, choiceIndex, isOtherChoice } = action.payload
+
+    // 선택지 삭제
+    deleteChoice: (state, action: DeleteChoiceAction) => {
+      const { questionId, choiceIndex } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
       if (question.questionType === QUESTION_TYPE.multipleChoice) {
-        const { questionId, choiceIndex, isOtherChoice } = action.payload
-        const question = state.questions.find(
-          (v) => v.questionId === questionId,
-        )
-        if (question.questionType === QUESTION_TYPE.multipleChoice) {
-          if (!isOtherChoice) {
-            if (question.otherChoice.isSelected) {
-              question.otherChoice.isSelected = false
-              question.otherChoice.content = undefined
-            } else {
-              const selectedChoice = question.choices.find(
-                (choice) => choice.isSelected === true,
-              )
-              if (selectedChoice) {
-                selectedChoice.isSelected = false
-              }
-            }
-            question.choices[choiceIndex].isSelected = true
-          } else {
-            const selectedChoice = question.choices.find(
-              (choice) => choice.isSelected === true,
-            )
-            if (selectedChoice) {
-              selectedChoice.isSelected = false
-            }
-            question.otherChoice.isSelected = true
-          }
-        }
+        question.choices.splice(choiceIndex, 1)
       }
     },
 
-    // 기타 선택지
-    addOtherChoice: (state, action: AddOtherChoiceAction) => {
-      const { questionId } = action.payload
-      const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
-        question.otherChoice.useState = true
-      }
-    },
-    setOtherChoice: (state, action) => {
-      const { questionId, content } = action.payload
-      const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
-        question.otherChoice.content = content
-      }
-    },
-    deleteOtherChoice: (state, action: DeleteOtherChoiceAction) => {
-      const { questionId } = action.payload
-      const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
-        question.otherChoice.useState = false
-        question.otherChoice.content = undefined
-        question.otherChoice.isSelected = false
-      }
-    },
-
-    // 선택지 변경
+    // 선택지 내용 변경
     setChoiceContent: (state, action) => {
       const { questionId, choiceIndex, content } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -196,12 +146,72 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 선택지 삭제 (객관식, 체크박스인 경우)
-    deleteChoice: (state, action: DeleteChoiceAction) => {
-      const { questionId, choiceIndex } = action.payload
+    // 선택지 체크
+    makeChoice: (state, action: MakeChoiceAction) => {
+      const { questionId, choiceIndex, isEtcChoice } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+
+      if (
+        question &&
+        (question.questionType === QUESTION_TYPE.multipleChoice ||
+          question.questionType === QUESTION_TYPE.checkbox)
+      ) {
+        // 체크된 선택지 있는지 찾아서
+        const selectedChoice = question.choices.find(
+          (choice) => choice.isSelected === true,
+        )
+        // 있으면 체크 해제
+        if (selectedChoice) {
+          selectedChoice.isSelected = false
+        }
+        // 체크하려는 선택지가 기타선택지가 아니면`
+        if (!isEtcChoice) {
+          // 기타선택지가 선택되어 있는 경우 체크 해제하고 내용초기화
+          if (question.etcChoice.isSelected) {
+            question.etcChoice.isSelected = false
+            question.etcChoice.content = undefined
+          }
+          // 체크한 인덱스의 선택지를 true
+          question.choices[choiceIndex].isSelected = true
+        } else {
+          // 체크하려는 선택지가 기타선택지이면 기타선택지를 true
+          question.etcChoice.isSelected = true
+        }
+      }
+    },
+
+    // 기타선택지 추가
+    addEtcChoice: (state, action: AddEtcChoiceAction) => {
+      const { questionId } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (
+        question.questionType === QUESTION_TYPE.multipleChoice ||
+        question.questionType === QUESTION_TYPE.checkbox
+      ) {
+        question.etcChoice.useState = true
+      }
+    },
+
+    // 기타선택지 내용 변경
+    setEtcChoiceContent: (state, action) => {
+      const { questionId, content } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (
+        question.questionType === QUESTION_TYPE.multipleChoice ||
+        question.questionType === QUESTION_TYPE.checkbox
+      ) {
+        question.etcChoice.content = content
+      }
+    },
+
+    // 기타선택지 삭제
+    deleteEtcChoice: (state, action: DeleteOtherChoiceAction) => {
+      const { questionId } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
       if (question.questionType === QUESTION_TYPE.multipleChoice) {
-        question.choices.splice(choiceIndex, 1)
+        question.etcChoice.useState = false
+        question.etcChoice.content = undefined
+        question.etcChoice.isSelected = false
       }
     },
   },

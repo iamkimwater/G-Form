@@ -2,12 +2,12 @@ import { View, Text } from 'react-native'
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RadioButton } from 'react-native-paper'
-import { questionSlice } from '../../../../store/slices/question-slice'
-import { RootState } from '../../../../types/navigation-type'
-import { MultipleChoiceComponentProps } from '../../../../types/props'
+import { questionSlice } from '../../../../../store/slices/question-slice'
+import { RootState } from '../../../../../types/navigation-type'
+import { MultipleChoiceComponentProps } from '../../../../../types/props'
 import { Button } from '@react-native-material/core'
-import ChoicesComponent from './multiple-choice/choices-component'
-import OtherChoiceComponent from './multiple-choice/other-choice-component'
+import ChoicesComponent from './choices-component'
+import EtcChoiceComponent from './etc-choice-component'
 
 const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
   question,
@@ -29,9 +29,9 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
     )
   }, [dispatch, question.questionId, question.choices.length])
 
-  const addOtherChoice = () => {
+  const addEtcChoice = () => {
     dispatch(
-      questionSlice.actions.addOtherChoice({
+      questionSlice.actions.addEtcChoice({
         questionId: question.questionId,
       }),
     )
@@ -40,8 +40,8 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
   return (
     <View>
       <ChoicesComponent question={question} />
-      {question.otherChoice.useState ? (
-        <OtherChoiceComponent question={question} />
+      {question.etcChoice.useState ? (
+        <EtcChoiceComponent question={question} />
       ) : null}
 
       {!previewMode && isEditing && (
@@ -61,7 +61,7 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
             titleStyle={{ fontSize: 16 }}
             onPress={onAddChoice}
           />
-          {!question.otherChoice.useState && (
+          {!question.etcChoice.useState && (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ fontSize: 16 }}>또는</Text>
               <Button
@@ -69,7 +69,7 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
                 title="'기타' 추가"
                 color={'#2640b4'}
                 titleStyle={{ fontSize: 16 }}
-                onPress={addOtherChoice}
+                onPress={addEtcChoice}
               />
             </View>
           )}

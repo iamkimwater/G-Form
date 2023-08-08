@@ -1,4 +1,3 @@
-import { IQuestion } from '../../types/form-type'
 import { TouchableOpacity, View } from 'react-native'
 import QuestionTitleComponent from './question-title/question-title-component'
 import ActionSheetComponent from './action-sheet/action-sheet-component'
@@ -7,12 +6,12 @@ import QuestionToolbarComponent from './question-toolbar/question-toolbar-compon
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../types/navigation-type'
+import { EditingQuestionComponentProps } from '../../types/props'
 
-const QuestionDetailComponent = (props: {
-  question: IQuestion
-  changeEditingState: () => void
+const EditingQuestionComponent: React.FC<EditingQuestionComponentProps> = ({
+  question,
+  changeEditingState,
 }) => {
-  const { question, changeEditingState } = props
   const { previewMode } = useSelector((root: RootState) => root.preview)
 
   return (
@@ -23,18 +22,13 @@ const QuestionDetailComponent = (props: {
         marginRight: 10,
         marginBottom: 10,
         borderStyle: 'solid',
+        borderTopWidth: 7,
         borderWidth: 1,
         borderRadius: 3,
         justifyContent: 'space-between',
       }}
       activeOpacity={1}
     >
-      <View
-        style={{
-          height: 5,
-          backgroundColor: '#000000',
-        }}
-      />
       <View style={{ marginTop: 10, marginStart: 20, marginEnd: 20 }}>
         <QuestionTitleComponent
           questionId={question.questionId}
@@ -90,4 +84,4 @@ const QuestionDetailComponent = (props: {
   )
 }
 
-export default QuestionDetailComponent
+export default EditingQuestionComponent

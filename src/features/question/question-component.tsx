@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../types/navigation-type'
 import { QuestionComponentProps } from '../../types/props'
 import { questionSlice } from '../../store/slices/question-slice'
-import QuestionDetailComponent from './question-detail-component'
-import QuestionIntroComponent from './question-intro-component'
+import EditingQuestionComponent from './editing-question-component'
+import NonEditingQuestionComponent from './non-editing-question-component'
 
 const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
   const { editingQuestionId } = useSelector(
@@ -23,12 +23,12 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
   }
 
   return isEditing ? (
-    <QuestionDetailComponent
+    <EditingQuestionComponent
       question={question}
       changeEditingState={changeEditingState}
     />
   ) : (
-    <QuestionIntroComponent
+    <NonEditingQuestionComponent
       question={question}
       changeEditingState={changeEditingState}
     />

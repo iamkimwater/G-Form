@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { setPreviewMode } from '../../store/slices/preview-slice'
 import { PreviewProps, RootState } from '../../types/navigation-type'
 import TitleComponent from '../title/title-component'
-import QuestionIntroComponent from '../question/question-intro-component'
+import NonEditingQuestionComponent from '../question/non-editing-question-component'
 import { questionSlice } from '../../store/slices/question-slice'
 
 const PreviewTab: React.FC<PreviewProps> = (questionId) => {
@@ -35,7 +35,7 @@ const PreviewTab: React.FC<PreviewProps> = (questionId) => {
       ListHeaderComponent={<TitleComponent />}
       data={questions}
       renderItem={({ item }) => (
-        <QuestionIntroComponent
+        <NonEditingQuestionComponent
           key={item.questionId}
           question={item}
           changeEditingState={() => changeEditingState(item.questionId)}

@@ -9,6 +9,16 @@ export interface QuestionComponentProps {
   question: IQuestion
 }
 
+export interface EditingQuestionComponentProps {
+  question: IQuestion
+  changeEditingState: () => void
+}
+
+export interface NonEditingQuestionComponentProps {
+  question: IQuestion
+  changeEditingState: () => void
+}
+
 export interface QuestionTitleComponentProps {
   questionId: number
   questionTitle: string
@@ -20,8 +30,8 @@ export interface ActionSheetComponentProps {
   questionType: QUESTION_TYPE
 }
 
-export interface QuestionAnswerComponentProps {
-  question: IQuestion
+export interface QuestionAnswerComponentProps<T extends IQuestion> {
+  question: T
 }
 
 export interface QuestionToolbarComponentProps {

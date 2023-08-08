@@ -3,12 +3,13 @@ import { QuestionAnswerComponentProps } from '../../../types/props'
 import { QUESTION_TYPE } from '../../../types/enums'
 import LongAnswerComponent from './types/long-answer-component'
 import ShortAnswerComponent from './types/short-answer-component'
-import MultipleChoiceComponent from './types/multiple-choice-component'
-import CheckboxComponent from './types/checkbox-component'
+import MultipleChoiceComponent from './types/multiple-choice/multiple-choice-component'
+import CheckboxComponent from './types/checkbox/checkbox-component'
+import { IQuestion } from '../../../types/form-type'
 
-const QuestionAnswerComponent: React.FC<QuestionAnswerComponentProps> = ({
-  question,
-}) => {
+const QuestionAnswerComponent: React.FC<
+  QuestionAnswerComponentProps<IQuestion>
+> = ({ question }) => {
   if (question.questionType === QUESTION_TYPE.shortAnswer) {
     return <ShortAnswerComponent />
   }

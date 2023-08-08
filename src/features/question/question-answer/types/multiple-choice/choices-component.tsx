@@ -12,9 +12,28 @@ const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
   question,
 }) => {
   const { previewMode } = useSelector((root: RootState) => root.preview)
+  const { editingQuestionId } = useSelector(
+    (state: RootState) => state.question,
+  )
 
+  const isEditing = editingQuestionId === question.questionId
   const dispatch = useDispatch()
 
+  // 미리보기탭에서 선택지 고르기
+  const makeChoice = (index) => {
+    if (!previewMode) {
+      return
+    }
+    dispatch(
+      questionSlice.actions.makeChoice({
+        questionId: question.questionId,
+        choiceIndex: index,
+        isEtcChoice: false,
+      }),
+    )
+  }
+
+  // 홈탭에서 선택지 내용 변경
   const changeChoiceContent = (text: string, choiceIndex: number) => {
     if (previewMode) {
       return
@@ -28,20 +47,8 @@ const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
     )
   }
 
-  const makeChoice = (index) => {
-    if (!previewMode) {
-      return
-    }
-    dispatch(
-      questionSlice.actions.makeChoice({
-        questionId: question.questionId,
-        choiceIndex: index,
-        isOtherChoice: false,
-      }),
-    )
-  }
-
-  const onDeleteChoice = useCallback(
+  // 홈탭 편집모드에서 선택지 삭제
+  const deleteChoice = useCallback(
     (index: number) => {
       if (previewMode) {
         return
@@ -64,7 +71,8 @@ const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
             key={`choice-${index}`}
             style={{
               flex: 1,
-              marginTop: 10,
+              marginTop: 3,
+              marginBottom: 3,
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -88,7 +96,9 @@ const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
               }}
               onChangeText={(text: string) => changeChoiceContent(text, index)}
             />
-            {!previewMode && question.choices.length > 1 && (
+
+            {/* 홈탭 편집모드에서 선택지가 2개 이상일 때만 삭제버튼 표시됨 */}
+            {!previewMode && isEditing && question.choices.length > 1 && (
               <View style={{ justifyContent: 'flex-end' }}>
                 <IconButton
                   icon={
@@ -96,7 +106,7 @@ const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
                       name="x"
                       size={18}
                       color="black"
-                      onPress={() => onDeleteChoice(index)}
+                      onPress={() => deleteChoice(index)}
                     />
                   }
                 />

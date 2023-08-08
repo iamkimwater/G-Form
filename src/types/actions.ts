@@ -49,7 +49,7 @@ export type AddChoiceAction = PayloadAction<{
 export type MakeChoiceAction = PayloadAction<{
   questionId: number
   choiceIndex?: number
-  isOtherChoice: boolean
+  isEtcChoice: boolean
 }>
 
 export type DeleteChoiceAction = PayloadAction<{
@@ -57,7 +57,7 @@ export type DeleteChoiceAction = PayloadAction<{
   choiceIndex: number
 }>
 
-export type AddOtherChoiceAction = PayloadAction<{
+export type AddEtcChoiceAction = PayloadAction<{
   questionId: number
 }>
 
