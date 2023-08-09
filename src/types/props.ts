@@ -59,3 +59,15 @@ export interface MultipleChoiceComponentProps {
 export interface CheckboxComponentProps {
   question: ICheckboxQuestion
 }
+
+export interface ChoicesComponentProps {
+  question: IMultipleChoiceQuestion | ICheckboxQuestion
+  editingQuestionId: number
+  previewMode: boolean
+}
+
+export interface EtcChoiceComponentProps {
+  question: IMultipleChoiceQuestion | ICheckboxQuestion
+  editingQuestionId: number
+  previewMode: boolean
+}

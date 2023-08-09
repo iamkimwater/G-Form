@@ -1,21 +1,18 @@
 import React, { useRef } from 'react'
-import { TextInput, View, Text } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { RadioButton } from 'react-native-paper'
+import { Text, TextInput, View } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { Checkbox, RadioButton } from 'react-native-paper'
 import { questionSlice } from '../../../../../store/slices/question-slice'
-import { RootState } from '../../../../../types/navigation-type'
-import { MultipleChoiceComponentProps } from '../../../../../types/props'
+import { EtcChoiceComponentProps } from '../../../../../types/props'
 import { IconButton } from '@react-native-material/core'
 import { Feather } from '@expo/vector-icons'
+import { QUESTION_TYPE } from '../../../../../types/enums'
 
-const EtcChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
+const EtcChoiceComponent: React.FC<EtcChoiceComponentProps> = ({
   question,
+  editingQuestionId,
+  previewMode,
 }) => {
-  const { previewMode } = useSelector((root: RootState) => root.preview)
-  const { editingQuestionId } = useSelector(
-    (state: RootState) => state.question,
-  )
-
   const isEditing = editingQuestionId === question.questionId
   const textInputRef = useRef<TextInput>()
   const dispatch = useDispatch()
@@ -79,16 +76,29 @@ const EtcChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
           justifyContent: 'space-between',
         }}
       >
-        <RadioButton
-          value={'기타'}
-          status={
-            !previewMode || !question.etcChoice.isSelected
-              ? 'unchecked'
-              : 'checked'
-          }
-          disabled={!previewMode}
-          onPress={makeEtcChoice}
-        />
+        {question.questionType === QUESTION_TYPE.multipleChoice ? (
+          <RadioButton
+            value={'기타'}
+            status={
+              !previewMode || !question.etcChoice.isSelected
+                ? 'unchecked'
+                : 'checked'
+            }
+            disabled={!previewMode}
+            onPress={makeEtcChoice}
+          />
+        ) : (
+          <Checkbox
+            status={
+              !previewMode || !question.etcChoice.isSelected
+                ? 'unchecked'
+                : 'checked'
+            }
+            disabled={!previewMode}
+            onPress={makeEtcChoice}
+          />
+        )}
+
         {previewMode ? <Text style={{ fontSize: 16 }}>기타:</Text> : null}
         <TextInput
           ref={textInputRef}

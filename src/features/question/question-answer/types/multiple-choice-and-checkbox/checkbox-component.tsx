@@ -1,17 +1,15 @@
 import { View, Text } from 'react-native'
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RadioButton } from 'react-native-paper'
+import { Checkbox } from 'react-native-paper'
 import { questionSlice } from '../../../../../store/slices/question-slice'
 import { RootState } from '../../../../../types/navigation-type'
-import { MultipleChoiceComponentProps } from '../../../../../types/props'
+import { CheckboxComponentProps } from '../../../../../types/props'
 import { Button } from '@react-native-material/core'
-import ChoicesComponent from './choices-component'
 import EtcChoiceComponent from './etc-choice-component'
+import ChoicesComponent from './choices-component'
 
-const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
-  question,
-}) => {
+const CheckboxComponent: React.FC<CheckboxComponentProps> = ({ question }) => {
   const { previewMode } = useSelector((root: RootState) => root.preview)
   const { editingQuestionId } = useSelector(
     (state: RootState) => state.question,
@@ -39,9 +37,17 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
 
   return (
     <View>
-      <ChoicesComponent question={question} />
+      <ChoicesComponent
+        question={question}
+        editingQuestionId={editingQuestionId}
+        previewMode={previewMode}
+      />
       {question.etcChoice.useState ? (
-        <EtcChoiceComponent question={question} />
+        <EtcChoiceComponent
+          question={question}
+          editingQuestionId={editingQuestionId}
+          previewMode={previewMode}
+        />
       ) : null}
 
       {!previewMode && isEditing && (
@@ -53,7 +59,7 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
             alignItems: 'center',
           }}
         >
-          <RadioButton value={''} />
+          <Checkbox status={'unchecked'} />
           <Button
             variant="text"
             title="옵션 추가"
@@ -79,4 +85,4 @@ const MultipleChoiceComponent: React.FC<MultipleChoiceComponentProps> = ({
   )
 }
 
-export default MultipleChoiceComponent
+export default CheckboxComponent

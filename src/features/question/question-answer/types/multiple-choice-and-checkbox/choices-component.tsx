@@ -1,21 +1,18 @@
 import { TextInput, View } from 'react-native'
 import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RadioButton } from 'react-native-paper'
+import { useDispatch } from 'react-redux'
+import { Checkbox, RadioButton } from 'react-native-paper'
 import { questionSlice } from '../../../../../store/slices/question-slice'
-import { RootState } from '../../../../../types/navigation-type'
-import { MultipleChoiceComponentProps } from '../../../../../types/props'
+import { ChoicesComponentProps } from '../../../../../types/props'
 import { IconButton } from '@react-native-material/core'
 import { Feather } from '@expo/vector-icons'
+import { QUESTION_TYPE } from '../../../../../types/enums'
 
-const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
+const ChoicesComponent: React.FC<ChoicesComponentProps> = ({
   question,
+  editingQuestionId,
+  previewMode,
 }) => {
-  const { previewMode } = useSelector((root: RootState) => root.preview)
-  const { editingQuestionId } = useSelector(
-    (state: RootState) => state.question,
-  )
-
   const isEditing = editingQuestionId === question.questionId
   const dispatch = useDispatch()
 
@@ -78,14 +75,24 @@ const ChoicesComponent: React.FC<MultipleChoiceComponentProps> = ({
               justifyContent: 'space-between',
             }}
           >
-            <RadioButton
-              value={choice.content}
-              status={
-                !previewMode || !choice.isSelected ? 'unchecked' : 'checked'
-              }
-              disabled={!previewMode}
-              onPress={() => makeChoice(index)}
-            />
+            {question.questionType === QUESTION_TYPE.multipleChoice ? (
+              <RadioButton
+                value={choice.content}
+                status={
+                  !previewMode || !choice.isSelected ? 'unchecked' : 'checked'
+                }
+                disabled={!previewMode}
+                onPress={() => makeChoice(index)}
+              />
+            ) : (
+              <Checkbox
+                status={
+                  !previewMode || !choice.isSelected ? 'unchecked' : 'checked'
+                }
+                disabled={!previewMode}
+                onPress={() => makeChoice(index)}
+              />
+            )}
             <TextInput
               value={choice.content}
               multiline={true}

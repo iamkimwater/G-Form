@@ -123,7 +123,10 @@ export const questionSlice = createSlice({
     addChoice: (state, action: AddChoiceAction) => {
       const { questionId, newChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+      if (
+        question.questionType === QUESTION_TYPE.multipleChoice ||
+        question.questionType === QUESTION_TYPE.checkbox
+      ) {
         question.choices.push({ content: newChoice, isSelected: false })
       }
     },
@@ -132,7 +135,10 @@ export const questionSlice = createSlice({
     deleteChoice: (state, action: DeleteChoiceAction) => {
       const { questionId, choiceIndex } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+      if (
+        question.questionType === QUESTION_TYPE.multipleChoice ||
+        question.questionType === QUESTION_TYPE.checkbox
+      ) {
         question.choices.splice(choiceIndex, 1)
       }
     },
@@ -141,7 +147,10 @@ export const questionSlice = createSlice({
     setChoiceContent: (state, action) => {
       const { questionId, choiceIndex, content } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+      if (
+        question.questionType === QUESTION_TYPE.multipleChoice ||
+        question.questionType === QUESTION_TYPE.checkbox
+      ) {
         question.choices[choiceIndex].content = content
       }
     },
@@ -151,11 +160,7 @@ export const questionSlice = createSlice({
       const { questionId, choiceIndex, isEtcChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
 
-      if (
-        question &&
-        (question.questionType === QUESTION_TYPE.multipleChoice ||
-          question.questionType === QUESTION_TYPE.checkbox)
-      ) {
+      if (question && question.questionType === QUESTION_TYPE.multipleChoice) {
         // 체크된 선택지 있는지 찾아서
         const selectedChoice = question.choices.find(
           (choice) => choice.isSelected === true,
@@ -175,6 +180,14 @@ export const questionSlice = createSlice({
           question.choices[choiceIndex].isSelected = true
         } else {
           // 체크하려는 선택지가 기타선택지이면 기타선택지를 true
+          question.etcChoice.isSelected = true
+        }
+      }
+
+      if (question.questionType === QUESTION_TYPE.checkbox) {
+        if (!isEtcChoice) {
+          question.choices[choiceIndex].isSelected = true
+        } else {
           question.etcChoice.isSelected = true
         }
       }
@@ -208,7 +221,10 @@ export const questionSlice = createSlice({
     deleteEtcChoice: (state, action: DeleteOtherChoiceAction) => {
       const { questionId } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
-      if (question.questionType === QUESTION_TYPE.multipleChoice) {
+      if (
+        question.questionType === QUESTION_TYPE.multipleChoice ||
+        question.questionType === QUESTION_TYPE.checkbox
+      ) {
         question.etcChoice.useState = false
         question.etcChoice.content = undefined
         question.etcChoice.isSelected = false
