@@ -11,11 +11,11 @@ const QuestionAnswerComponent: React.FC<
   QuestionAnswerComponentProps<IQuestion>
 > = ({ question }) => {
   if (question.questionType === QUESTION_TYPE.shortAnswer) {
-    return <ShortAnswerComponent />
+    return <ShortAnswerComponent question={question} />
   }
 
   if (question.questionType === QUESTION_TYPE.longAnswer) {
-    return <LongAnswerComponent />
+    return <LongAnswerComponent question={question} />
   }
 
   if (question.questionType === QUESTION_TYPE.multipleChoice) {

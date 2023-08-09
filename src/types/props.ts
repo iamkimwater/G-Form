@@ -1,7 +1,9 @@
 import {
+  IShortAnswerQuestion,
   ICheckboxQuestion,
   IMultipleChoiceQuestion,
   IQuestion,
+  ILongAnswerQuestion,
 } from './form-type'
 import { QUESTION_TYPE } from './enums'
 
@@ -50,6 +52,14 @@ export interface CopyButtonComponentProps {
 
 export interface DeleteButtonComponentProps {
   questionId: number
+}
+
+export interface ShortAnswerComponentProps {
+  question: IShortAnswerQuestion
+}
+
+export interface LongAnswerComponentProps {
+  question: ILongAnswerQuestion
 }
 
 export interface MultipleChoiceComponentProps {

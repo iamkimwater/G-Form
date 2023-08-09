@@ -41,7 +41,7 @@ export const questionSlice = createSlice({
       state.editingQuestionId = questionId
     },
 
-    // 질문 제목 변경1
+    // 질문 제목 변경
     setPendingQuestionTitle: (state, action: setPendingQuestionTitleAction) => {
       const { questionId, pendingQuestionTitle } = action.payload
       const index = state.questions.findIndex(
@@ -119,7 +119,19 @@ export const questionSlice = createSlice({
       state.questions = new_questions
     },
 
-    // 선택지 생성
+    // 답변 내용 변경 (단문형, 장문형인 경우)
+    setContent: (state, action) => {
+      const { questionId, answer } = action.payload
+      const question = state.questions.find((v) => v.questionId === questionId)
+      if (
+        question.questionType === QUESTION_TYPE.shortAnswer ||
+        question.questionType === QUESTION_TYPE.longAnswer
+      ) {
+        question.answer = answer
+      }
+    },
+
+    // 선택지 생성 (객관식, 체크박스인 경우)
     addChoice: (state, action: AddChoiceAction) => {
       const { questionId, newChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -131,7 +143,7 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 선택지 삭제
+    // 선택지 삭제 (객관식, 체크박스인 경우)
     deleteChoice: (state, action: DeleteChoiceAction) => {
       const { questionId, choiceIndex } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -143,7 +155,7 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 선택지 내용 변경
+    // 선택지 내용 변경 (객관식, 체크박스인 경우)
     setChoiceContent: (state, action) => {
       const { questionId, choiceIndex, content } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -155,7 +167,7 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 선택지 체크
+    // 선택지 체크 (객관식, 체크박스인 경우)
     makeChoice: (state, action: MakeChoiceAction) => {
       const { questionId, choiceIndex, isEtcChoice } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -193,7 +205,7 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 기타선택지 추가
+    // 기타선택지 추가 (객관식, 체크박스인 경우)
     addEtcChoice: (state, action: AddEtcChoiceAction) => {
       const { questionId } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -205,7 +217,7 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 기타선택지 내용 변경
+    // 기타선택지 내용 변경 (객관식, 체크박스인 경우)
     setEtcChoiceContent: (state, action) => {
       const { questionId, content } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)
@@ -217,7 +229,7 @@ export const questionSlice = createSlice({
       }
     },
 
-    // 기타선택지 삭제
+    // 기타선택지 삭제 (객관식, 체크박스인 경우)
     deleteEtcChoice: (state, action: DeleteOtherChoiceAction) => {
       const { questionId } = action.payload
       const question = state.questions.find((v) => v.questionId === questionId)

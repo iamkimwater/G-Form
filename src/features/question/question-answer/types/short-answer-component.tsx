@@ -1,18 +1,38 @@
 import { TextInput, View } from 'react-native'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../../types/navigation-type'
+import { questionSlice } from '../../../../store/slices/question-slice'
+import { ShortAnswerComponentProps } from '../../../../types/props'
 
-const ShortAnswerComponent = () => {
+const ShortAnswerComponent: React.FC<ShortAnswerComponentProps> = ({
+  question,
+}) => {
   const { previewMode } = useSelector((state: RootState) => state.preview)
+
+  const dispatch = useDispatch()
+
+  // 미리보기탭에서 답변 내용 변경
+  const changeContent = (text: string) => {
+    if (!previewMode) {
+      return
+    }
+    dispatch(
+      questionSlice.actions.setContent({
+        questionId: question.questionId,
+        answer: text,
+      }),
+    )
+  }
 
   return (
     <View>
       <TextInput
-        value={''}
+        value={previewMode ? question.answer : '단답형 텍스트'}
         multiline={false}
         placeholder={previewMode ? '내 답변' : '단답형 텍스트'}
         editable={previewMode}
+        onChangeText={(text: string) => changeContent(text)}
         style={{
           fontSize: 16,
           paddingTop: 20,

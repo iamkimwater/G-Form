@@ -1,6 +1,6 @@
 import { QUESTION_TYPE } from './enums'
 
-interface IDefaultQuestion {
+export interface IDefaultQuestion {
   questionId: number
   questionTitle: string
   pendingQuestionTitle: string
@@ -8,12 +8,14 @@ interface IDefaultQuestion {
   questionRequired: boolean
 }
 
-interface IShortAnswerQuestion extends IDefaultQuestion {
+export interface IShortAnswerQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.shortAnswer
+  answer: string
 }
 
-interface ILongAnswerQuestion extends IDefaultQuestion {
+export interface ILongAnswerQuestion extends IDefaultQuestion {
   questionType: QUESTION_TYPE.longAnswer
+  answer: string
 }
 
 export interface IChoice {
