@@ -1,5 +1,5 @@
 import { TextInput, View } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../../types/navigation-type'
 import { questionSlice } from '../../../../store/slices/question-slice'
@@ -13,17 +13,20 @@ const ShortAnswerComponent: React.FC<ShortAnswerComponentProps> = ({
   const dispatch = useDispatch()
 
   // 미리보기탭에서 답변 내용 변경
-  const changeContent = (text: string) => {
-    if (!previewMode) {
-      return
-    }
-    dispatch(
-      questionSlice.actions.setContent({
-        questionId: question.questionId,
-        answer: text,
-      }),
-    )
-  }
+  const changeContent = useCallback(
+    (text: string) => {
+      if (!previewMode) {
+        return
+      }
+      dispatch(
+        questionSlice.actions.setContent({
+          questionId: question.questionId,
+          answer: text,
+        }),
+      )
+    },
+    [question.answer],
+  )
 
   return (
     <View>
