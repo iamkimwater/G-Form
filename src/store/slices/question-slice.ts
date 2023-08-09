@@ -10,7 +10,6 @@ import {
   DeleteQuestionAction,
   MakeChoiceAction,
   setEditingQuestionIdAction,
-  setPendingQuestionTitleAction,
   SetQuestionRequiredAction,
   setQuestionTitleAction,
   SetQuestionTypeAction,
@@ -19,7 +18,6 @@ import {
 const defaultQuestion: IQuestion = {
   questionId: 1,
   questionTitle: '제목 없는 질문',
-  pendingQuestionTitle: '제목 없는 질문',
   questionType: QUESTION_TYPE.multipleChoice,
   questionRequired: false,
   choices: [{ content: '옵션1', isSelected: false }],
@@ -42,20 +40,12 @@ export const questionSlice = createSlice({
     },
 
     // 질문 제목 변경
-    setPendingQuestionTitle: (state, action: setPendingQuestionTitleAction) => {
-      const { questionId, pendingQuestionTitle } = action.payload
-      const index = state.questions.findIndex(
-        (v) => v.questionId === questionId,
-      )
-      state.questions[index].pendingQuestionTitle = pendingQuestionTitle
-    },
     setQuestionTitle: (state, action: setQuestionTitleAction) => {
-      const { questionId } = action.payload
+      const { questionId, questionTitle } = action.payload
       const index = state.questions.findIndex(
         (v) => v.questionId === questionId,
       )
-      state.questions[index].questionTitle =
-        state.questions[index].pendingQuestionTitle
+      state.questions[index].questionTitle = questionTitle
     },
 
     // 질문 타입 변경

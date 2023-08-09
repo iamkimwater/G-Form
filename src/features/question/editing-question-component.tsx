@@ -33,7 +33,6 @@ const EditingQuestionComponent: React.FC<EditingQuestionComponentProps> = ({
         <QuestionTitleComponent
           questionId={question.questionId}
           questionTitle={question.questionTitle}
-          pendingQuestionTitle={question.pendingQuestionTitle}
         />
       </View>
       <View>

@@ -3,7 +3,6 @@ import { QUESTION_TYPE } from './enums'
 export interface IDefaultQuestion {
   questionId: number
   questionTitle: string
-  pendingQuestionTitle: string
   questionType: QUESTION_TYPE
   questionRequired: boolean
 }

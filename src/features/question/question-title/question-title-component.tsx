@@ -8,38 +8,31 @@ import { RootState } from '../../../types/navigation-type'
 const QuestionTitleComponent: React.FC<QuestionTitleComponentProps> = ({
   questionId,
   questionTitle,
-  pendingQuestionTitle,
 }) => {
   const { previewMode } = useSelector((root: RootState) => root.preview)
 
   const dispatch = useDispatch()
 
-  const tryChangeQuestionTitle = useCallback(
+  const changeQuestionTitle = useCallback(
     (text: string) => {
-      if (text !== pendingQuestionTitle) {
+      if (text !== questionTitle) {
         dispatch(
-          questionSlice.actions.setPendingQuestionTitle({
+          questionSlice.actions.setQuestionTitle({
             questionId,
-            pendingQuestionTitle: text,
+            questionTitle: text,
           }),
         )
       }
     },
-    [pendingQuestionTitle],
+    [questionTitle],
   )
-  const changeQuestionTitle = useCallback(() => {
-    if (pendingQuestionTitle !== questionTitle) {
-      dispatch(questionSlice.actions.setQuestionTitle({ questionId }))
-    }
-  }, [pendingQuestionTitle, questionTitle, questionId, dispatch])
 
   return (
     <TextInput
-      value={pendingQuestionTitle}
+      value={questionTitle}
       multiline={true}
-      onChangeText={tryChangeQuestionTitle}
+      onChangeText={changeQuestionTitle}
       editable={!previewMode}
-      onBlur={changeQuestionTitle}
       style={{
         fontSize: 18,
         padding: 15,

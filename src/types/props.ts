@@ -24,7 +24,6 @@ export interface NonEditingQuestionComponentProps {
 export interface QuestionTitleComponentProps {
   questionId: number
   questionTitle: string
-  pendingQuestionTitle: string
 }
 
 export interface ActionSheetComponentProps {

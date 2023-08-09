@@ -14,13 +14,9 @@ export type setEditingQuestionIdAction = PayloadAction<{
   questionId: number
 }>
 
-export type setPendingQuestionTitleAction = PayloadAction<{
-  questionId: number
-  pendingQuestionTitle: string
-}>
-
 export type setQuestionTitleAction = PayloadAction<{
   questionId: number
+  questionTitle: string
 }>
 
 export type SetQuestionTypeAction = PayloadAction<{
