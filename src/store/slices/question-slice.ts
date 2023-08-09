@@ -104,7 +104,7 @@ export const questionSlice = createSlice({
     },
 
     // 질문 순서 변경
-    changeOrder: (state, action) => {
+    reorderQuestions: (state, action) => {
       const { new_questions } = action.payload
       state.questions = new_questions
     },

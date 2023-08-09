@@ -8,7 +8,7 @@ import TitleComponent from '../title/title-component'
 import NonEditingQuestionComponent from '../question/non-editing-question-component'
 import { questionSlice } from '../../store/slices/question-slice'
 
-const PreviewTab: React.FC<PreviewProps> = (questionId) => {
+const PreviewTab: React.FC<PreviewProps> = () => {
   const { questions } = useSelector((state: RootState) => state.question)
 
   const dispatch = useDispatch()

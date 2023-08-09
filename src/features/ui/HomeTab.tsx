@@ -14,9 +14,9 @@ const HomeTab = () => {
 
   const dispatch = useDispatch()
 
-  const reorderQuestions = (data) => {
+  const changeQuestionsOrder = (data) => {
     dispatch(
-      questionSlice.actions.changeOrder({
+      questionSlice.actions.reorderQuestions({
         new_questions: data,
       }),
     )
@@ -26,7 +26,7 @@ const HomeTab = () => {
     <DraggableFlatList
       removeClippedSubviews={false}
       ListHeaderComponent={<TitleComponent />}
-      onDragEnd={({ data }) => reorderQuestions(data)}
+      onDragEnd={({ data }) => changeQuestionsOrder(data)}
       data={questions}
       renderItem={({ item, drag, isActive }: RenderItemParams<IQuestion>) =>
         draggable({ options: { drag, isActive } })(

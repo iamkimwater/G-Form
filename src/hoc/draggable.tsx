@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 const Draggable = (props: {
